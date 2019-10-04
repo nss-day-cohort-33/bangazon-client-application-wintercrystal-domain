@@ -10,11 +10,11 @@ const ApplicationViews = () => {
     return (
         <React.Fragment>
 
-            <Route
+            {/* <Route
                 exact path="/" render={props => {
                     return <ParkExplorer {...props} />
                 }}
-            />
+            /> */}
 
             <Route
                 path="/register" render={props => {
@@ -28,7 +28,7 @@ const ApplicationViews = () => {
                 }}
             />
 
-            <Route
+            {/* <Route
                 path="/areas" render={props => {
                     return (
                         <>
@@ -56,7 +56,7 @@ const ApplicationViews = () => {
                        <MyItinerary/>
                     )
                 }}
-            />
+            /> */}
 
         </React.Fragment>
     )
