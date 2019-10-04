@@ -3,6 +3,7 @@ import React from "react"
 import { withRouter } from "react-router-dom"
 import Register from "./auth/Register"
 import Login from "./auth/Login"
+import ProductCategories from "./productcategories/ProductCategories"
 
 
 
@@ -48,15 +49,15 @@ const ApplicationViews = () => {
                         </>
                     )
                 }}
-            />
+            /> */}
 
             <Route
-                path="/myitinerary" render={props => {
+                path="/productcategories" render={props => {
                     return (
-                       <MyItinerary/>
+                       <ProductCategories/>
                     )
                 }}
-            /> */}
+            />
 
         </React.Fragment>
     )
