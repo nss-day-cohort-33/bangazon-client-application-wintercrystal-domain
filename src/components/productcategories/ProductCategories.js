@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
+import ProductCategory from "./ProductCategory"
 
 const ProductCategories = props => {
     const [categories, setCategories] = useState([])
@@ -25,7 +26,7 @@ const ProductCategories = props => {
             <article className="categoryList">
                 {
                     categories.map(category =>
-                        <h3>{category.name}</h3>
+                        <ProductCategory key={category.id} category={category} />
                     )
                 }
             </article>
