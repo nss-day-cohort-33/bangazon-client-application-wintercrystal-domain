@@ -24,7 +24,7 @@ const Login = props => {
         login(credentials)
             .then(() => {
                 props.history.push({
-                    pathname: "/attractions"
+                    pathname: "/"
                 })
             })
     }
@@ -34,10 +34,10 @@ const Login = props => {
             <form className="form--login" onSubmit={handleLogin}>
                 <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                 <fieldset>
-                    <label htmlFor="inputEmail"> Email address </label>
+                    <label htmlFor="inputUsername"> Username </label>
                     <input ref={username} type="username"
                         className="form-control"
-                        placeholder="Email address"
+                        placeholder="Username"
                         required autoFocus />
                 </fieldset>
                 <fieldset>

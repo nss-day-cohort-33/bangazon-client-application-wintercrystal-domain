@@ -10,7 +10,8 @@ const Register = props => {
     const lastName = useRef()
     const password = useRef()
     const firstName = useRef()
-    const familyMembers = useRef()
+    const phone = useRef()
+    const address = useRef()
     const verifyPassword = useRef()
     const { register } = useSimpleAuth()
 
@@ -21,7 +22,8 @@ const Register = props => {
             "username": userName.current.value,
             "first_name": firstName.current.value,
             "last_name": lastName.current.value,
-            "family_members": familyMembers.current.value,
+            "phone_number": phone.current.value,
+            "address": address.current.value,
             "email": email.current.value,
             "password": password.current.value
         }
@@ -70,10 +72,19 @@ const Register = props => {
                         required />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="inputEmail"> Family members </label>
-                    <input ref={familyMembers} type="number"
-                        name="familyMembers"
+                    <label htmlFor="inputPhone"> Phone Number </label>
+                    <input ref={phone} type="text"
+                        name="phone"
                         className="form-control"
+                        placeholder="000-000-0000"
+                        required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="inputAddress"> Address </label>
+                    <input ref={address} type="text"
+                        name="address"
+                        className="form-control"
+                        placeholder="Address"
                         required />
                 </fieldset>
                 <fieldset>
