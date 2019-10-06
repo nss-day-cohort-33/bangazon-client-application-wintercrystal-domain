@@ -51,7 +51,9 @@ const ApplicationViews = () => {
 
             <Route exact path="/products/:productId(\d+)" render={(props) => {
                 let product = products.find(product => product.id === +props.match.params.productId)
+                if (product) {
                     return <ProductDetail {...props} product={product} />
+                }
                 }}
             />
 
