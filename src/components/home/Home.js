@@ -37,7 +37,6 @@ const Home = props => {
 
     return (
         <>
-            <h1>hello</h1>
             <article className="productList">
                 {
                     products.map(product =>
