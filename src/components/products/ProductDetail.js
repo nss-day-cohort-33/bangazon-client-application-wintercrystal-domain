@@ -8,7 +8,7 @@ const ProductDetail = props => {
 
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer=1`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}`, {
                 "method": "GET",
                 "headers": {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
