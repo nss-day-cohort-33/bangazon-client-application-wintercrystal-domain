@@ -8,6 +8,7 @@ import ProductDetail from "./products/ProductDetail"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import ProductCategories from "./productcategories/ProductCategories"
 import ProductCategory  from "./productcategories/ProductCategory"
+import PaymentTypeForm from "./paymentmethod/PaymentTypeForm"
 import ProductForm from "./products/ProductForm"
 
 
@@ -123,6 +124,14 @@ const ApplicationViews = () => {
               }
               return <ProductCategory {...props} category={ category } />
               }}
+            />
+
+            <Route
+                exact path="/payment/create" render={props => {
+                    return (
+                       <PaymentTypeForm />
+                    )
+                }}
             />
 
         </React.Fragment>
