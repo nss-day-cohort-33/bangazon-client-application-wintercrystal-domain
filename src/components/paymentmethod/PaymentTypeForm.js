@@ -56,8 +56,3 @@ const PaymentTypeForm = props => {
 }
 
 export default PaymentTypeForm
-
-
-{/* <Link className="nav-link" to={`/productcategories/${props.category.id}`}>
-                <h3>{props.category.name}({products.length})</h3>
-                </Link> */}
