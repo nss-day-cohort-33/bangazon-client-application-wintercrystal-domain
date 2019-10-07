@@ -7,7 +7,7 @@ const Product = props => {
         <>
 
           <div className={`card product-${props.product.id}`} style={{width: "18rem"}}>
-            <img className="card-img-top" src={props.product.image.product_pic} alt={`${props.product.name}`}/>
+            <img className="card-img-top" src={props.product.image} alt={`${props.product.name}`}/>
             <div className="card-body">
               <section className="product">
                   <Link className="nav-link" to={`/products/${props.product.id}`}>
