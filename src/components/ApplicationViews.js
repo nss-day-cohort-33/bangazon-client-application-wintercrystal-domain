@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react"
 import { withRouter } from "react-router-dom"
 import Register from "./auth/Register"
 import Login from "./auth/Login"
-import Home from "./home/Home"
 import ProductDetail from "./products/ProductDetail"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import ProductCategories from "./productcategories/ProductCategories"
 import ProductCategory  from "./productcategories/ProductCategory"
+import HomePage from "./home/HomePage"
 import PaymentTypeForm from "./paymentmethod/PaymentTypeForm"
 import ProductForm from "./products/ProductForm"
 import PaymentTypes from "./paymentmethod/PaymentTypes"
@@ -55,7 +55,7 @@ const ApplicationViews = () => {
 
             <Route
                 exact path="/" render={props => {
-                    return <Home {...props} />
+                    return <HomePage {...props} />
                 }}
             />
 
