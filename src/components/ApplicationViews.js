@@ -6,6 +6,7 @@ import Login from "./auth/Login"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import ProductCategories from "./productcategories/ProductCategories"
 import ProductCategory  from "./productcategories/ProductCategory"
+import ProductForm from "./products/ProductForm"
 
 
 
@@ -74,6 +75,13 @@ const ApplicationViews = () => {
                 exact path="/productcategories" render={props => {
                     return (
                        <ProductCategories categories={categories} />
+                    )
+                }}
+            />
+            <Route
+                exact path="/products/new" render={props => {
+                    return (
+                       <ProductForm  {...props} categories={categories} />
                     )
                 }}
             />
