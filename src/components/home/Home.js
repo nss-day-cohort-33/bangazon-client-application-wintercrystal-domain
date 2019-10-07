@@ -35,8 +35,13 @@ const Home = props => {
         }
     }, [])
 
+
     return (
-        <>
+        <React.Fragment>
+
+            <a href='/products/new'>
+            <h4>Sell a Product</h4>
+            </a>
             <article className="productList">
                 {
                     products.map(product =>
@@ -46,7 +51,8 @@ const Home = props => {
                             />)
                 }
             </article>
-        </>
+
+        </React.Fragment>
     )
 }
 export default withRouter(Home)
