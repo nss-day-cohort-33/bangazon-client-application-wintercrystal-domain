@@ -7,38 +7,36 @@ const PaymentTypeForm = props => {
   const merchant = useRef()
   const accountNumber = useRef()
   const expireDate = useRef()
+  const createDate = useRef()
   const { isAuthenticated } = useSimpleAuth()
-  const getDate = () => {
-    const currDate =
-    console.log(currDate);
+
+  const createPayment = () => {
+      const expire = `${expireDate.current.value}-01`
+      if (isAuthenticated()) {
+          fetch(`http://localhost:8000/paymenttypes`, {
+              "method": "POST",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+              },
+              "body": JSON.stringify({
+                "merchant_name": merchant.current.value,
+                "account_number": accountNumber.current.value,
+                "expiration_date": expire,
+                "create_date": createDate.current.value
+            })
+          })
+              .then(response => response.json())
+      }
   }
 
-  // const getProducts = () => {
-  //     if (isAuthenticated()) {
-  //         fetch(`http://localhost:8000/paymenttypes`, {
-  //             "method": "POST",
-  //             "headers": {
-  //                 "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-  //             },
-  //             "body": JSON.stringify({
-  //               "merchant_name": merchant.current.value,
-  //               "account_number": accountNumber.current.value,
-  //               "expiration_date": expireDate.current.value,
-  //               "create_date": new Date().toISOString().slice(0,10),
-  //           })
-  //         })
-  //             .then(response => response.json())
-  //             .then(setProducts)
-  //     }
-  // }
-
-  // useEffect(getProducts, [])
 
   return (
     <>
       <form className="categoryList" onSubmit={(e) => {
         e.preventDefault()
-        getDate()
+        createPayment()
       }}>
         <fieldset>
           <label htmlFor="merchant">Merchant:</label>
@@ -50,8 +48,9 @@ const PaymentTypeForm = props => {
         </fieldset>
         <fieldset>
           <label htmlFor="expire-date">Expiration Date:</label>
-          <input type="date" ref={expireDate} name="expire-date" required></input>
+          <input type="month" ref={expireDate} name="expire-date" min={new Date().toISOString().slice(0,7)} required></input>
         </fieldset>
+        <input type="date" ref={createDate} name="expire-date" value={new Date().toISOString().slice(0,10)} hidden></input>
         <button type="submit">Submit</button>
       </form>
     </>
