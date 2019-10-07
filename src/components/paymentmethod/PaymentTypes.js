@@ -28,7 +28,7 @@ const ProductCategories = props => {
             <article className="paymentTypeList">
                 {
                     paymentTypes.map(paymentType=>
-                        <PaymentType key={paymentType.id} paymentType={paymentType} />
+                        <PaymentType key={paymentType.id} paymentType={paymentType} getPaymentTypes={getPaymentTypes} />
                     )
                 }
             </article>
