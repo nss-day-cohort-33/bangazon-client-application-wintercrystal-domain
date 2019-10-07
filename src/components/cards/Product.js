@@ -10,6 +10,7 @@ const Product = props => {
             <div className="card-body">
               <h5 className="card-title">{props.product.name}</h5>
               <p className="card-text">${props.product.price}</p>
+              <p className="card-text">Quantity: <b>{props.product.quantity}</b> available</p>
               <a href="#" className={`btn btn-primary product-details-${props.product.id}`}>Product Details</a>
             </div>
           </div>

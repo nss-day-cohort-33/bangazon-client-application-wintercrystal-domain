@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import Product from "../cards/Product"
 import "./ProductCategory.css"
@@ -26,7 +27,9 @@ const ProductCategory = props => {
         <>
             { products.length > 0 ?
               <article className="categoryList">
+                <Link className="nav-link" to={`/productcategories/${props.category.id}`}>
                 <h3>{props.category.name}({products.length})</h3>
+                </Link>
                 <div className={`productDiv category-${props.category.id}`}>
                   {
                       products.slice(0, 3).map(product =>

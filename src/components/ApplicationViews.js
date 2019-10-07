@@ -1,13 +1,32 @@
 import { Route } from "react-router-dom"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { withRouter } from "react-router-dom"
 import Register from "./auth/Register"
 import Login from "./auth/Login"
+import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import ProductCategories from "./productcategories/ProductCategories"
+import ProductCategory  from "./productcategories/ProductCategory"
 
 
 
 const ApplicationViews = () => {
+    const [categories, setCategories] = useState([])
+    const { isAuthenticated } = useSimpleAuth()
+
+    const getCategories = () => {
+      if (isAuthenticated()) {
+      fetch(`http://localhost:8000/productcategories`, {
+        "method": "GET",
+        "headers": {
+            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+        }
+    })
+        .then(response => response.json())
+        .then(setCategories)
+  }
+    }
+
+    useEffect(getCategories, [])
     return (
         <React.Fragment>
 
@@ -18,13 +37,13 @@ const ApplicationViews = () => {
             /> */}
 
             <Route
-                path="/register" render={props => {
+                exact path="/register" render={props => {
                     return <Register {...props} />
                 }}
             />
 
             <Route
-                path="/login" render={props => {
+                exact path="/login" render={props => {
                     return <Login {...props} />
                 }}
             />
@@ -52,11 +71,22 @@ const ApplicationViews = () => {
             /> */}
 
             <Route
-                path="/productcategories" render={props => {
+                exact path="/productcategories" render={props => {
                     return (
-                       <ProductCategories/>
+                       <ProductCategories categories={categories} />
                     )
                 }}
+            />
+
+            <Route exact path="/productcategories/:categoryId(\d+)" render={(props) => {
+              let category = categories.find(category =>
+              category.id === +props.match.params.categoryId
+              )
+              if (!category) {
+                category = {id:404, name:"Category Not Found." }
+              }
+              return <ProductCategory {...props} category={ category } />
+              }}
             />
 
         </React.Fragment>
