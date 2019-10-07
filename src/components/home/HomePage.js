@@ -27,8 +27,11 @@ const HomePage = props => {
     return(
         <>
         <h1> WELCOME TO BANGAZON</h1>
+        <a href='/products/new'>
+            <h4>Sell a Product</h4>
+            </a>
 
-        <h3>here are the 20 most recent items</h3>
+        <h3>here are some of the most recent products</h3>
         {products.length > 0 ?
 
         products.map(product =>{
