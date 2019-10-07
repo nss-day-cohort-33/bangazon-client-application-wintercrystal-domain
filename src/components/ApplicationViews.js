@@ -1,8 +1,10 @@
 import { Route } from "react-router-dom"
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { withRouter } from "react-router-dom"
 import Register from "./auth/Register"
 import Login from "./auth/Login"
+import Home from "./home/Home"
+import ProductDetail from "./products/ProductDetail"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import ProductCategories from "./productcategories/ProductCategories"
 import ProductCategory  from "./productcategories/ProductCategory"
@@ -11,38 +13,42 @@ import HomePage from "./home/HomePage"
 
 
 const ApplicationViews = () => {
+    const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
-    const getCategories = () => {
-      if (isAuthenticated()) {
-      fetch(`http://localhost:8000/productcategories`, {
-        "method": "GET",
-        "headers": {
-            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-        }
-    })
-        .then(response => response.json())
-        .then(setCategories)
-  }
-    }
-
     const getProducts = () => {
-        if (isAuthenticated()) {
-        fetch(`http://localhost:8000/products`, {
-          "method": "GET",
-          "headers": {
-              "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-          }
-      })
-          .then(response => response.json())
-          .then(setProducts)
+      if (isAuthenticated()) {
+            fetch(`http://localhost:8000/products`, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+                .then(response => response.json())
+                .then(setProducts)
+        }
     }
-      }
 
-    useEffect(getCategories, [])
-    useEffect(getProducts, [])
+    const getCategories = () => {
+            if (isAuthenticated()) {
+            fetch(`http://localhost:8000/productcategories`, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+                .then(response => response.json())
+                .then(setCategories)
+        }
+    }
+
+    useEffect(() => {
+        getProducts()
+        getCategories()
+    }, [])
+
     return (
         <React.Fragment>
 
@@ -61,6 +67,14 @@ const ApplicationViews = () => {
             <Route
                 exact path="/login" render={props => {
                     return <Login {...props} />
+                }}
+            />
+
+            <Route exact path="/products/:productId(\d+)" render={(props) => {
+                let product = products.find(product => product.id === +props.match.params.productId)
+                if (product) {
+                    return <ProductDetail {...props} product={product} />
+                }
                 }}
             />
 
