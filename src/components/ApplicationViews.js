@@ -6,11 +6,13 @@ import Login from "./auth/Login"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import ProductCategories from "./productcategories/ProductCategories"
 import ProductCategory  from "./productcategories/ProductCategory"
+import HomePage from "./home/HomePage"
 
 
 
 const ApplicationViews = () => {
     const [categories, setCategories] = useState([])
+    const [products, setProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
     const getCategories = () => {
@@ -26,15 +28,29 @@ const ApplicationViews = () => {
   }
     }
 
+    const getProducts = () => {
+        if (isAuthenticated()) {
+        fetch(`http://localhost:8000/products`, {
+          "method": "GET",
+          "headers": {
+              "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+          }
+      })
+          .then(response => response.json())
+          .then(setProducts)
+    }
+      }
+
     useEffect(getCategories, [])
+    useEffect(getProducts, [])
     return (
         <React.Fragment>
 
-            {/* <Route
+            <Route
                 exact path="/" render={props => {
-                    return <ParkExplorer {...props} />
+                    return <HomePage {...props} />
                 }}
-            /> */}
+            />
 
             <Route
                 exact path="/register" render={props => {
