@@ -130,7 +130,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/payment/create" render={props => {
                     return (
-                       <PaymentTypeForm />
+                       <PaymentTypeForm {...props} />
                     )
                 }}
             />
