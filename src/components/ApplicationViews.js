@@ -109,7 +109,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/products/new" render={props => {
                     return (
-                       <ProductForm  {...props} categories={categories} />
+                       <ProductForm  {...props} getProducts = {getProducts} categories={categories} />
                     )
                 }}
             />

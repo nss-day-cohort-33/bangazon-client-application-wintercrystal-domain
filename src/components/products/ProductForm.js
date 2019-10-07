@@ -67,6 +67,7 @@ const ProductForm = props => {
             .then(response => response.json())
             .then(() => {
                 console.log("Added")
+                props.getProducts()
                 props.history.push("/")
             })
     }
