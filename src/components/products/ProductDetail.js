@@ -1,10 +1,42 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import { Link } from 'react-router-dom'
 
 const ProductDetail = props => {
+    const [orders, setOrders] = useState([])
+    const { isAuthenticated } = useSimpleAuth()
+
+    const getOrders = () => {
+        if (isAuthenticated()) {
+            fetch(`http://localhost:8000/orders?customer=1`, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+                .then(response => response.json())
+                .then(setOrders)
+        }
+    }
+
+    useEffect(getOrders, [])
+
+    const addOrder = () => {
+        if (isAuthenticated()) {
+            fetch(`http://localhost:8000/products?product=${props.product.id}`, {
+                "method": "POST",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+                .then(response => response.json())
+                .then(setOrders)
+        }
+    }
+
     return (
         <>
-            {console.log(props.product)}
+            {console.log(orders)}
             {
 
                 <section className="product-details">
