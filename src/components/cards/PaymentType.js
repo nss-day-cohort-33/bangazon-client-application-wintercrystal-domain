@@ -7,11 +7,11 @@ const PaymentType = props => {
     return (
         <>
 
-          <div className={`card product-${props.paymentType.id}`} style={{width: "18rem"}}>
+          <div className={`card paymentType-${props.paymentType.id}`} style={{width: "18rem"}}>
             <div className="card-body">
               <h5 className="card-title">{props.paymentType.merchant_name}</h5>
               <p className="card-text">Expeiration Date: {newDate}</p>
-              <a href="#" className={`btn btn-primary product-details-${props.paymentType.id}`}>Delete</a>
+              <a href="#" className={`btn btn-primary paymentType-delete-${props.paymentType.id}`}>Delete</a>
             </div>
           </div>
 

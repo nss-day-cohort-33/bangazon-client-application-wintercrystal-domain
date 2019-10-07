@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import PaymentType from "../cards/PaymentType"
+import "./PaymentType.css"
 
 const ProductCategories = props => {
     const [paymentTypes, setPaymentTypes] = useState([])
@@ -23,7 +24,8 @@ const ProductCategories = props => {
 
     return (
         <>
-            <article className="categoryList">
+            <h1>Payment Options</h1>
+            <article className="paymentTypeList">
                 {
                     paymentTypes.map(paymentType=>
                         <PaymentType key={paymentType.id} paymentType={paymentType} />
