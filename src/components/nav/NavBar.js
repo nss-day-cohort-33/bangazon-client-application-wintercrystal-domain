@@ -18,6 +18,9 @@ const NavBar = props => {
                 <li className="nav-item">
                     <Link className="nav-link" to="/payment/create">Add Payment Method</Link>
                 </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/payment/options">Payment Options</Link>
+                </li>
 
                 {
                     isAuthenticated() ?

@@ -10,6 +10,7 @@ import ProductCategories from "./productcategories/ProductCategories"
 import ProductCategory  from "./productcategories/ProductCategory"
 import PaymentTypeForm from "./paymentmethod/PaymentTypeForm"
 import ProductForm from "./products/ProductForm"
+import PaymentTypes from "./paymentmethod/PaymentTypes"
 
 
 
@@ -130,6 +131,14 @@ const ApplicationViews = () => {
                 exact path="/payment/create" render={props => {
                     return (
                        <PaymentTypeForm />
+                    )
+                }}
+            />
+
+            <Route
+                exact path="/payment/options" render={props => {
+                    return (
+                       <PaymentTypes />
                     )
                 }}
             />
