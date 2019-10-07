@@ -15,7 +15,6 @@ import ProductForm from "./products/ProductForm"
 const ApplicationViews = () => {
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
-    const [products, setProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
     const getProducts = () => {
