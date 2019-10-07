@@ -1,8 +1,10 @@
 import { Route } from "react-router-dom"
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { withRouter } from "react-router-dom"
 import Register from "./auth/Register"
 import Login from "./auth/Login"
+import Home from "./home/Home"
+import ProductDetail from "./products/ProductDetail"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import ProductCategories from "./productcategories/ProductCategories"
 import ProductCategory  from "./productcategories/ProductCategory"
@@ -11,31 +13,49 @@ import ProductForm from "./products/ProductForm"
 
 
 const ApplicationViews = () => {
+    const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
-    const getCategories = () => {
+    const getProducts = () => {
       if (isAuthenticated()) {
-      fetch(`http://localhost:8000/productcategories`, {
-        "method": "GET",
-        "headers": {
-            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+            fetch(`http://localhost:8000/products`, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+                .then(response => response.json())
+                .then(setProducts)
         }
-    })
-        .then(response => response.json())
-        .then(setCategories)
-  }
     }
 
-    useEffect(getCategories, [])
+    const getCategories = () => {
+            if (isAuthenticated()) {
+            fetch(`http://localhost:8000/productcategories`, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+                .then(response => response.json())
+                .then(setCategories)
+        }
+    }
+
+    useEffect(() => {
+        getProducts()
+        getCategories()
+    }, [])
+
     return (
         <React.Fragment>
 
-            {/* <Route
+            <Route
                 exact path="/" render={props => {
-                    return <ParkExplorer {...props} />
+                    return <Home {...props} />
                 }}
-            /> */}
+            />
 
             <Route
                 exact path="/register" render={props => {
@@ -46,6 +66,14 @@ const ApplicationViews = () => {
             <Route
                 exact path="/login" render={props => {
                     return <Login {...props} />
+                }}
+            />
+
+            <Route exact path="/products/:productId(\d+)" render={(props) => {
+                let product = products.find(product => product.id === +props.match.params.productId)
+                if (product) {
+                    return <ProductDetail {...props} product={product} />
+                }
                 }}
             />
 
