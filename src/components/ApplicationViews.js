@@ -6,11 +6,14 @@ import Login from "./auth/Login"
 import Home from "./home/Home"
 import ProductDetail from "./home/ProductDetail"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
+import ProductCategories from "./productcategories/ProductCategories"
+import ProductCategory  from "./productcategories/ProductCategory"
 
 
 
 const ApplicationViews = () => {
     const [products, setProducts] = useState([])
+    const [categories, setCategories] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
     const getProducts = () => {
@@ -26,7 +29,23 @@ const ApplicationViews = () => {
         }
     }
 
-    useEffect(getProducts, [])
+    const getCategories = () => {
+            if (isAuthenticated()) {
+            fetch(`http://localhost:8000/productcategories`, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+                .then(response => response.json())
+                .then(setCategories)
+        }
+    }
+
+    useEffect(() => {
+        getProducts()
+        getCategories()
+    }, [])
 
     return (
         <React.Fragment>
@@ -38,13 +57,13 @@ const ApplicationViews = () => {
             />
 
             <Route
-                path="/register" render={props => {
+                exact path="/register" render={props => {
                     return <Register {...props} />
                 }}
             />
 
             <Route
-                path="/login" render={props => {
+                exact path="/login" render={props => {
                     return <Login {...props} />
                 }}
             />
@@ -77,15 +96,26 @@ const ApplicationViews = () => {
                         </>
                     )
                 }}
-            />
+            /> */}
 
             <Route
-                path="/myitinerary" render={props => {
+                exact path="/productcategories" render={props => {
                     return (
-                       <MyItinerary/>
+                       <ProductCategories categories={categories} />
                     )
                 }}
-            /> */}
+            />
+
+            <Route exact path="/productcategories/:categoryId(\d+)" render={(props) => {
+              let category = categories.find(category =>
+              category.id === +props.match.params.categoryId
+              )
+              if (!category) {
+                category = {id:404, name:"Category Not Found." }
+              }
+              return <ProductCategory {...props} category={ category } />
+              }}
+            />
 
         </React.Fragment>
     )
