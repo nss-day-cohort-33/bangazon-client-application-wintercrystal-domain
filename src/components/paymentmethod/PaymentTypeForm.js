@@ -1,7 +1,5 @@
 import React, { useRef } from "react"
-import { Link } from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
-import Product from "../cards/Product"
 
 const PaymentTypeForm = props => {
   const merchant = useRef()
