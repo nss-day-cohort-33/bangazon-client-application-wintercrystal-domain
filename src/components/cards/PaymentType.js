@@ -1,6 +1,11 @@
 import React from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
+//Author: Danny Barker
+//Purpose: Shows a users payment types as a card and adds a delete button to delete a users payment type
+//Methods: Takes one payment object, at a time, and displays it to the DOM and also add a delete button functionality to delete payment type.
+
+
 const PaymentType = props => {
 
 
