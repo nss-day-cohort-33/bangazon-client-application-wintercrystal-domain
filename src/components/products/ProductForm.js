@@ -39,9 +39,18 @@ const ProductForm = props => {
 
     const addProduct = (event) => {
         event.preventDefault()
-        console.log(product_category_value.current.value)
+        console.log(price.current.value)
+        const money = Number(price.current.value).toFixed(2)
+
+
+
+
+
         if (product_category_value.current.value == "0") {
             window.alert("Please select a Product Category")
+        }
+        else if(quantity.current.value % 1 !== 0) {
+            window.alert("Please enter a valid quantity")
         }
         else {
 
@@ -59,7 +68,7 @@ const ProductForm = props => {
             },
             "body": JSON.stringify({
                 "name": name.current.value,
-                "price": price.current.value,
+                "price": money,
                 "description": description.current.value,
                 "quantity": quantity.current.value,
                 "created_date": `${yyyy}-${mm}-${dd}`,
@@ -87,10 +96,10 @@ const ProductForm = props => {
         <React.Fragment>
             <form>
                 <div>
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Name:</label>
                     <input
                     ref={name}
-                    name="starttime"
+                    name="name"
                     autoFocus
                     required
                     type="text"
@@ -98,17 +107,22 @@ const ProductForm = props => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="price">Price</label>
+                    <label htmlFor="price">Price: $</label>
                     <input
                     ref={price}
+                    min = "0"
                     name="price"
                     required
                     type="number"
+                    step="0.01"
+                    pattern="^\d+(?:\.\d{1,2})?$"
+
+
 
                     />
                 </div>
                 <div >
-                    <label htmlFor="description">Description</label>
+                    <label htmlFor="description">Description:</label>
                     <input
                     ref={description}
                     name="description"
@@ -118,17 +132,18 @@ const ProductForm = props => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="quantity">Quantity</label>
+                    <label htmlFor="quantity">Quantity:</label>
                     <input
                     ref={quantity}
                     name="quantity"
+                    min = "0"
                     required
                     type="number"
 
                     />
                 </div>
                 <div>
-                    <label htmlFor="product_category">Product Category</label>
+                    <label htmlFor="product_category">Product Category:</label>
                     <select
                     name="product_category"
                     ref={product_category_value}
@@ -143,7 +158,7 @@ const ProductForm = props => {
 
     </div>
                 <div>
-                    <label htmlFor="location">Location</label>
+                    <label htmlFor="location">Location:</label>
                     <input
                     ref={location}
                     name="location"
