@@ -80,7 +80,11 @@ const CartOrder = (props) => {
     console.log(orderProducts)
     return (
         <>
-        <button onClick={deleteCart}>Delete Order</button>
+        {orderProducts.length > 0 ?
+          <button onClick={deleteCart}>Delete Order</button>
+          :
+          ""
+          }
         <h2>Items in your cart:</h2>
         <section className="cartProducts">
             {order ?
