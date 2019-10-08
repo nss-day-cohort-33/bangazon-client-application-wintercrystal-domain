@@ -6,19 +6,17 @@ import "./ProductCategory.css"
 
 const ProductCategory = props => {
     const [products, setProducts] = useState([])
-    const { isAuthenticated } = useSimpleAuth()
 
     const getProducts = () => {
-        if (isAuthenticated()) {
             fetch(`http://localhost:8000/products?category=${props.category.id}`, {
                 "method": "GET",
                 "headers": {
-                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
                 }
             })
                 .then(response => response.json())
                 .then(setProducts)
-        }
     }
 
     useEffect(getProducts, [])
@@ -33,7 +31,7 @@ const ProductCategory = props => {
                 <div className={`productDiv category-${props.category.id}`}>
                   {
                       products.slice(0, 3).map(product =>
-                          <Product key={product.id} product={product} />
+                          <Product key={product.id} product={product} showCategory={false} />
                       )
                   }
                 </div>

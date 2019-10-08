@@ -20,29 +20,27 @@ const ApplicationViews = () => {
     const { isAuthenticated } = useSimpleAuth()
 
     const getProducts = () => {
-      if (isAuthenticated()) {
             fetch(`http://localhost:8000/products`, {
                 "method": "GET",
                 "headers": {
-                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
                 }
             })
                 .then(response => response.json())
                 .then(setProducts)
-        }
     }
 
     const getCategories = () => {
-            if (isAuthenticated()) {
             fetch(`http://localhost:8000/productcategories`, {
                 "method": "GET",
                 "headers": {
-                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
                 }
             })
                 .then(response => response.json())
                 .then(setCategories)
-        }
     }
 
     useEffect(() => {
@@ -104,7 +102,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/productcategories" render={props => {
                     return (
-                       <ProductCategories categories={categories} />
+                       <ProductCategories {...props} categories={categories} />
                     )
                 }}
             />
@@ -130,17 +128,25 @@ const ApplicationViews = () => {
 
             <Route
                 exact path="/payment/create" render={props => {
-                    return (
-                       <PaymentTypeForm {...props} />
-                    )
+                    if (isAuthenticated()) {
+                      return (
+                        <PaymentTypeForm {...props} />
+                      )
+                    } else {
+                      return <Redirect to="/login" />
+                    }
                 }}
             />
 
             <Route
                 exact path="/payment/options" render={props => {
-                    return (
-                       <PaymentTypes />
-                    )
+                  if (isAuthenticated()) {
+                      return (
+                        <PaymentTypes {...props} />
+                      )
+                    } else {
+                      return <Redirect to="/login" />
+                    }
                 }}
             />
 
