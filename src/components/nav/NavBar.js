@@ -16,14 +16,12 @@ const NavBar = props => {
                     <Link className="nav-link" to="/productcategories">Product Categories</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/payment/create">Add Payment Method</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/payment/options">Payment Options</Link>
+                    <Link className="nav-link" to="/profile">My Profile</Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/cart">Cart</Link>
                 </li>
+
 
                 {
                     isAuthenticated() ?
