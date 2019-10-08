@@ -5,6 +5,7 @@ import { request } from "http"
 
 // Author: Dustin Hobson
 // Purpose: Render New Product Form and Functionality to add new product to DB
+// Methods: GET, POST
 const ProductForm = props => {
 
     const { isAuthenticated } = useSimpleAuth()

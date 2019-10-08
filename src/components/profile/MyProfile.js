@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react"
 import { withRouter } from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
+
+
+// Author: Dustin Hobson
+// Purpose: Render 'My Profile' Page with functioning links to payment options/form for authenticated users
 const Profile = props => {
 
 
