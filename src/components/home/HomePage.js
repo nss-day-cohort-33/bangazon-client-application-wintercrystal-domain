@@ -17,8 +17,10 @@ const HomePage = props => {
                 //       "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                 //   }
               })
-                  .then(response => response.json())
-                  .then(setProducts)
+              .then(response => response.json())
+              .then((response) => {
+                  setProducts(response.reverse())
+                })
         //   }
       }
 
