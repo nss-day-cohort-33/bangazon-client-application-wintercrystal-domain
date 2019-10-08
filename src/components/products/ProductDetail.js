@@ -4,9 +4,28 @@ import { Link } from 'react-router-dom'
 
 const ProductDetail = props => {
     const [order, setOrder] = useState([])
+    const [orderProduct, setOrderProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
     let datestring = new Date().toISOString().slice(0,10)
+
+    const getOrderProducts = (data) => {
+            if (data.length !== 0)
+            {
+                setOrder(data[0])
+                fetch(`http://localhost:8000/orderproducts?product_id=${props.product.id}&order_id=${data[0].id}`, {
+                    "method": "GET",
+                    "headers": {
+                        "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                    }
+                })
+                .then(response => response.json())
+                .then(setOrderProducts)
+            }
+            else {
+                setOrder(data)
+            }
+    }
 
     const getOrders = () => {
         if (isAuthenticated()) {
@@ -17,9 +36,10 @@ const ProductDetail = props => {
                 }
             })
             .then(response => response.json())
-            .then(setOrder)
+            .then(data => getOrderProducts(data))
         }
     }
+
 
     useEffect(getOrders, [])
 
@@ -54,22 +74,39 @@ const ProductDetail = props => {
                             quantity: 1
                         })
                     })
+                    .then(response => response.json())
+                    .then(setOrderProducts)
                 })
             }
             else {
-                console.log("goodbye")
-                fetch(`http://localhost:8000/orderproducts`, {
-                    "method": "POST",
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                    },
-                    body: JSON.stringify({
-                        order_id: order.id,
-                        product_id: props.product.id,
-                        quantity: 1
+                if (orderProduct.length === 0)
+                {
+                    console.log("goodbye")
+                    fetch(`http://localhost:8000/orderproducts`, {
+                        "method": "POST",
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                        },
+                        body: JSON.stringify({
+                            order_id: order.id,
+                            product_id: props.product.id,
+                            quantity: 1
+                        })
                     })
-                })
+                }
+                else {
+                    fetch(`http://localhost:8000/orderproducts/${orderProduct[0].id}`, {
+                        "method": "PUT",
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                        },
+                        body: JSON.stringify({
+                            quantity: (orderProduct[0].quantity += 1)
+                        })
+                    })
+                }
             }
         }
     }
