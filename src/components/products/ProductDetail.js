@@ -6,7 +6,7 @@ const ProductDetail = props => {
     const [order, setOrder] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
-    const datestring = new Date().toISOString().slice(0,10)
+    let datestring = new Date().toISOString().slice(0,10)
 
     const getOrders = () => {
         if (isAuthenticated()) {
@@ -30,6 +30,7 @@ const ProductDetail = props => {
                 fetch(`http://localhost:8000/orders`, {
                     "method": "POST",
                     "headers": {
+                        "Content-Type": "application/json",
                         "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                     },
                     body: JSON.stringify({
@@ -38,11 +39,13 @@ const ProductDetail = props => {
                         payment_id: null
                     })
                 })
-                .then(response => response.json)
+                .then(response => response.json())
                 .then((data) => {
+                    console.log(data)
                     fetch(`http://localhost:8000/orderproducts`, {
                         "method": "POST",
                         "headers": {
+                            "Content-Type": "application/json",
                             "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                         },
                         body: JSON.stringify({
@@ -58,6 +61,7 @@ const ProductDetail = props => {
                 fetch(`http://localhost:8000/orderproducts`, {
                     "method": "POST",
                     "headers": {
+                        "Content-Type": "application/json",
                         "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                     },
                     body: JSON.stringify({
