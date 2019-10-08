@@ -11,9 +11,9 @@ const ProductForm = props => {
     const price = useRef()
     const description = useRef()
     const quantity = useRef()
-    const product_category= useRef()
+    const product_category_value = useRef()
     const location = useRef()
-    const image = useRef()
+
 
 
 
@@ -37,11 +37,26 @@ const ProductForm = props => {
     //         })
     // }
 
-    const addProduct = () => {
+    const addProduct = (event) => {
+        event.preventDefault()
+        console.log(price.current.value)
+        const money = Number(price.current.value).toFixed(2)
 
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
+
+
+
+
+        if (product_category_value.current.value == "0") {
+            window.alert("Please select a Product Category")
+        }
+        else if(quantity.current.value % 1 !== 0) {
+            window.alert("Please enter a valid quantity")
+        }
+        else {
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
         console.log(`${yyyy}-${mm}-${dd}`)
         fetch('http://localhost:8000/products', {
@@ -53,24 +68,27 @@ const ProductForm = props => {
             },
             "body": JSON.stringify({
                 "name": name.current.value,
-                "price": price.current.value,
+                "price": money,
                 "description": description.current.value,
                 "quantity": quantity.current.value,
                 "created_date": `${yyyy}-${mm}-${dd}`,
-                "product_category_id": product_category.current.value,
+                "product_category_id": product_category_value.current.value,
                 "location": location.current.value,
-                "image_id":1
+                "image":""
                 // "image": image.current.value
 
             })
         })
-            .then(response => response.json())
-            .then(() => {
-                console.log("Added")
-                props.getProducts()
-                props.history.push("/")
-            })
+        .then(response => response.json())
+        .then(() => {
+            console.log("Added")
+            props.getProducts()
+            props.history.push("/")
+        })
     }
+    }
+
+
 
 
 
@@ -78,10 +96,10 @@ const ProductForm = props => {
         <React.Fragment>
             <form>
                 <div>
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Name:</label>
                     <input
                     ref={name}
-                    name="starttime"
+                    name="name"
                     autoFocus
                     required
                     type="text"
@@ -89,17 +107,22 @@ const ProductForm = props => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="price">Price</label>
+                    <label htmlFor="price">Price: $</label>
                     <input
                     ref={price}
+                    min = "0"
                     name="price"
                     required
                     type="number"
+                    step="0.01"
+                    pattern="^\d+(?:\.\d{1,2})?$"
+
+
 
                     />
                 </div>
                 <div >
-                    <label htmlFor="description">Description</label>
+                    <label htmlFor="description">Description:</label>
                     <input
                     ref={description}
                     name="description"
@@ -109,21 +132,23 @@ const ProductForm = props => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="quantity">Quantity</label>
+                    <label htmlFor="quantity">Quantity:</label>
                     <input
                     ref={quantity}
                     name="quantity"
+                    min = "0"
                     required
                     type="number"
 
                     />
                 </div>
                 <div>
-                    <label htmlFor="product_category">Product Category</label>
+                    <label htmlFor="product_category">Product Category:</label>
                     <select
-                    ref={product_category}
                     name="product_category"
+                    ref={product_category_value}
                     required>
+                    <option defaultValue value = "0"> -- select an option -- </option>
                     {
                         props.categories.map(category =>
                             <option  key={category.id} value={category.id}>{category.name}</option>
@@ -133,7 +158,7 @@ const ProductForm = props => {
 
     </div>
                 <div>
-                    <label htmlFor="location">Location</label>
+                    <label htmlFor="location">Location:</label>
                     <input
                     ref={location}
                     name="location"
@@ -142,16 +167,7 @@ const ProductForm = props => {
 
                     />
                 </div>
-                <div>
-                    <label htmlFor="image">Image</label>
-                    <input
-                    ref={image}
-                    name="image"
-                    required
-                    type="file"
 
-                    />
-                </div>
                 {/* <div>
                     <label htmlFor="pImage">Image</label>
                     <input
