@@ -12,6 +12,7 @@ const ProductDetail = props => {
     const getOrderProducts = (data) => {
             if (data.length !== 0)
             {
+                console.log(data)
                 setOrder(data[0])
                 fetch(`http://localhost:8000/orderproducts?product_id=${props.product.id}&order_id=${data[0].id}`, {
                     "method": "GET",
@@ -75,13 +76,14 @@ const ProductDetail = props => {
                         })
                     })
                     .then(response => response.json())
-                    .then(setOrderProducts)
+                    .then(getOrders)
                 })
             }
             else {
                 if (orderProduct.length === 0)
                 {
                     console.log("goodbye")
+                    console.log(order)
                     fetch(`http://localhost:8000/orderproducts`, {
                         "method": "POST",
                         "headers": {
@@ -117,7 +119,7 @@ const ProductDetail = props => {
 
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
-                    <h4>{props.product.price.tofixed(2)}</h4>
+                    <h4>{props.product.price.toFixed(2)}</h4>
                     <p>{props.product.description}</p>
                     <h4>Quantity Available: {props.product.quantity}</h4>
                     <button onClick={addOrder}>Add To Order</button>
