@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
 
-// By Daniel Krusch
+//Author: Daniel Krusch
+//Purpose: Shows a the details of the product the clicked on the home or product categories page
+//Methods: Will create an order or order product based on if an order exists or not for that user
 const ProductDetail = props => {
     // Order will contain open orders for this user (i.e ones with payment type of null)
     const [order, setOrder] = useState([])
@@ -111,6 +113,8 @@ const ProductDetail = props => {
                             quantity: 1
                         })
                     })
+                    .then(response => response.json())
+                    .then(getOrders)
                 }
                 // If an order product relation does exist update the quantity on click of add to order
                 else {
