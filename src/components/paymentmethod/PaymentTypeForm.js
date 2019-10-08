@@ -36,6 +36,7 @@ const PaymentTypeForm = props => {
 
   return (
     <>
+      <h1>Create a Payment Option</h1>
       <form className="categoryList" onSubmit={(e) => {
         e.preventDefault()
         createPayment()
@@ -53,7 +54,7 @@ const PaymentTypeForm = props => {
           <input type="month" ref={expireDate} name="expire-date" min={new Date().toISOString().slice(0,7)} required></input>
         </fieldset>
         <input type="date" ref={createDate} name="expire-date" defaultValue={new Date().toISOString().slice(0,10)} hidden></input>
-        <button type="submit">Submit</button>
+        <button type="submit">Add Payment</button>
       </form>
     </>
   )
