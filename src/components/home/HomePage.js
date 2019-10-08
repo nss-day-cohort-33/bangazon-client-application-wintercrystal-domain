@@ -10,16 +10,15 @@ const HomePage = props => {
 
 
     const getQuantity = () => {
-        // if (isAuthenticated()) {
               fetch(`http://localhost:8000/products?quantity=20`, {
                   "method": "GET",
-                //   "headers": {
-                //       "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                //   }
+                  "headers": {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                  }
               })
                   .then(response => response.json())
                   .then(setProducts)
-        //   }
       }
 
     useEffect(getQuantity, [])
@@ -35,7 +34,7 @@ const HomePage = props => {
         {products.length > 0 ?
 
         products.map(product =>{
-            return( <Product key={product.id} product={product} /> )
+            return( <Product key={product.id} product={product} showCategory={true} /> )
         })
 
 

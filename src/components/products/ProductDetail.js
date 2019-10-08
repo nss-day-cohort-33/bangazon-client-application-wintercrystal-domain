@@ -1,7 +1,12 @@
 import React from "react"
 import { Link } from 'react-router-dom'
+import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
+
 
 const ProductDetail = props => {
+
+  const { isAuthenticated } = useSimpleAuth()
+
     return (
         <>
             {
@@ -11,7 +16,12 @@ const ProductDetail = props => {
                     <h4>{props.product.price}</h4>
                     <p>{props.product.description}</p>
                     <h4>Quantity Available: {props.product.quantity}</h4>
-                    <button>Add To Order</button>
+                    {
+                      isAuthenticated() ?
+                      <button>Add To Order</button>
+                      :
+                      ""
+                    }
                 </section>
             }
         </>

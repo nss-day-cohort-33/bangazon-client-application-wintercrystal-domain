@@ -14,6 +14,16 @@ const Product = props => {
                       <h5>{props.product.name}</h5>
                   </Link>
               </section>
+              {
+                props.showCategory ?
+                <>
+                <p>Category: <Link className="nav-link" to={`/productcategories/${props.product.product_category.url.slice(-1)}`}>
+                      {props.product.product_category.name}
+                  </Link></p>
+                  </>
+                  :
+                  ""
+              }
               <p className="card-text">${props.product.price}</p>
               <p className="card-text">Quantity: <b>{props.product.quantity}</b> available</p>
             </div>
