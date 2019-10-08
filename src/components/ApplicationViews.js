@@ -11,6 +11,8 @@ import HomePage from "./home/HomePage"
 import PaymentTypeForm from "./paymentmethod/PaymentTypeForm"
 import ProductForm from "./products/ProductForm"
 import PaymentTypes from "./paymentmethod/PaymentTypes"
+import CardOrder from "./cart/CartOrder"
+import ProductCart from "./cards/productCart"
 
 
 
@@ -143,6 +145,18 @@ const ApplicationViews = () => {
                   if (isAuthenticated()) {
                       return (
                         <PaymentTypes {...props} />
+                      )
+                    } else {
+                      return <Redirect to="/login" />
+                    }
+                }}
+            />
+
+            <Route
+                exact path="/cart" render={props => {
+                  if (isAuthenticated()) {
+                      return (
+                        <CardOrder {...props} />
                       )
                     } else {
                       return <Redirect to="/login" />

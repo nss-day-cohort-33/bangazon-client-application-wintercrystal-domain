@@ -22,7 +22,7 @@ const HomePage = props => {
               .then((response) => {
                   setProducts(response.reverse())
                 })
-        //   }
+           
       }
 
     useEffect(getQuantity, [])
