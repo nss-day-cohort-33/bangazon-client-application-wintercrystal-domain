@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom"
 import React, { useEffect, useState } from "react"
-import { withRouter } from "react-router-dom"
+import { withRouter, Redirect } from "react-router-dom"
 import Register from "./auth/Register"
 import Login from "./auth/Login"
 import ProductDetail from "./products/ProductDetail"
@@ -109,9 +109,10 @@ const ApplicationViews = () => {
             />
             <Route
                 exact path="/products/new" render={props => {
-                    return (
+                    if(isAuthenticated()) return (
                        <ProductForm  {...props} getProducts = {getProducts} categories={categories} />
                     )
+                    else return <Redirect to="/login" />
                 }}
             />
 
