@@ -26,6 +26,10 @@ const PaymentTypeForm = props => {
             })
           })
               .then(response => response.json())
+              .then(() => {
+                props.history.push("/payment/options")
+              })
+
       }
   }
 

@@ -113,7 +113,6 @@ const ProductDetail = props => {
 
     return (
         <>
-            {console.log(order)}
             {
 
                 <section className="product-details">
