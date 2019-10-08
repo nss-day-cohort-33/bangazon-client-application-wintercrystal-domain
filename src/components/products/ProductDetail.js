@@ -3,8 +3,10 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import { Link } from 'react-router-dom'
 
 const ProductDetail = props => {
-    const [orders, setOrders] = useState([])
+    const [order, setOrder] = useState([])
     const { isAuthenticated } = useSimpleAuth()
+
+    const datestring = new Date().toISOString().slice(0,10)
 
     const getOrders = () => {
         if (isAuthenticated()) {
@@ -14,8 +16,8 @@ const ProductDetail = props => {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                 }
             })
-                .then(response => response.json())
-                .then(setOrders)
+            .then(response => response.json())
+            .then(setOrder)
         }
     }
 
@@ -23,20 +25,54 @@ const ProductDetail = props => {
 
     const addOrder = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/products?product=${props.product.id}`, {
-                "method": "POST",
-                "headers": {
-                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                }
-            })
-                .then(response => response.json())
-                .then(setOrders)
+            if (order.length === 0) {
+                console.log("hello")
+                fetch(`http://localhost:8000/orders`, {
+                    "method": "POST",
+                    "headers": {
+                        "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                    },
+                    body: JSON.stringify({
+                        created_date: datestring,
+                        customer_id: parseInt(localStorage.getItem("id"), 10),
+                        payment_id: null
+                    })
+                })
+                .then(response => response.json)
+                .then((data) => {
+                    fetch(`http://localhost:8000/orderproducts`, {
+                        "method": "POST",
+                        "headers": {
+                            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                        },
+                        body: JSON.stringify({
+                            order_id: data.id,
+                            product_id: props.product.id,
+                            quantity: 1
+                        })
+                    })
+                })
+            }
+            else {
+                console.log("goodbye")
+                fetch(`http://localhost:8000/orderproducts`, {
+                    "method": "POST",
+                    "headers": {
+                        "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                    },
+                    body: JSON.stringify({
+                        order_id: order.id,
+                        product_id: props.product.id,
+                        quantity: 1
+                    })
+                })
+            }
         }
     }
 
     return (
         <>
-            {console.log(orders)}
+            {console.log(order)}
             {
 
                 <section className="product-details">
@@ -44,7 +80,7 @@ const ProductDetail = props => {
                     <h4>{props.product.price}</h4>
                     <p>{props.product.description}</p>
                     <h4>Quantity Available: {props.product.quantity}</h4>
-                    <button>Add To Order</button>
+                    <button onClick={addOrder}>Add To Order</button>
                 </section>
             }
         </>

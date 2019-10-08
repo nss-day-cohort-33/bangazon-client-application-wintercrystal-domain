@@ -48,7 +48,7 @@ const PaymentTypeForm = props => {
           <label htmlFor="expire-date">Expiration Date:</label>
           <input type="month" ref={expireDate} name="expire-date" min={new Date().toISOString().slice(0,7)} required></input>
         </fieldset>
-        <input type="date" ref={createDate} name="expire-date" value={new Date().toISOString().slice(0,10)} hidden></input>
+        <input type="date" ref={createDate} name="expire-date" defaultValue={new Date().toISOString().slice(0,10)} hidden></input>
         <button type="submit">Submit</button>
       </form>
     </>
