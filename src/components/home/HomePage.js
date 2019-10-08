@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import Product from "../cards/Product"
+import "./HomePage.css"
 
 
 
@@ -25,20 +26,22 @@ const HomePage = props => {
 
     return(
         <>
-        <h1> WELCOME TO BANGAZON</h1>
-        <a href='/products/new'>
-            <h4>Sell a Product</h4>
-            </a>
+          <h1> WELCOME TO BANGAZON</h1>
+          <a href='/products/new'>
+              <h4>Sell a Product</h4>
+              </a>
 
-        <h3>here are some of the most recent products</h3>
-        {products.length > 0 ?
+          <h3>Here are some of the most recent products:</h3>
+          <div className="homePage-Div">
+          {products.length > 0 ?
 
-        products.map(product =>{
-            return( <Product key={product.id} product={product} showCategory={true} /> )
-        })
+          products.map(product =>{
+              return( <Product key={product.id} product={product} showCategory={true} /> )
+          })
 
 
-    : ""}
+          : ""}
+          </div>
         </>
     )
 }

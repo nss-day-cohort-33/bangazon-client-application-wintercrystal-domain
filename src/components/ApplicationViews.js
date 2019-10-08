@@ -108,9 +108,10 @@ const ApplicationViews = () => {
             />
             <Route
                 exact path="/products/new" render={props => {
-                    return (
+                    if(isAuthenticated()) return (
                        <ProductForm  {...props} getProducts = {getProducts} categories={categories} />
                     )
+                    else return <Redirect to="/login" />
                 }}
             />
 
