@@ -18,8 +18,11 @@ const HomePage = props => {
                     "Content-Type": "application/json",
                   }
               })
-                  .then(response => response.json())
-                  .then(setProducts)
+              .then(response => response.json())
+              .then((response) => {
+                  setProducts(response.reverse())
+                })
+           
       }
 
     useEffect(getQuantity, [])
