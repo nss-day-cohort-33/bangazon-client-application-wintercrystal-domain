@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 const ProductDetail = props => {
     return (
         <>
-            {console.log(props.product)}
             {
 
                 <section className="product-details">

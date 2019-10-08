@@ -1,0 +1,9 @@
+.paymentTypeList {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly
+}
+
+.card {
+  margin: 5px;
+}
