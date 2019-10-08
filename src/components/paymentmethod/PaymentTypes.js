@@ -4,6 +4,11 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import PaymentType from "../cards/PaymentType"
 import "./PaymentType.css"
 
+//Author: Danny Barker
+//Purpose: Show payment options specific tothat user
+//Methods: Uses a GET call to get user specific payment types loaded ot DOM, if user has none, then they will be given a link to add some.
+
+
 const ProductCategories = props => {
     const [paymentTypes, setPaymentTypes] = useState([])
     const { isAuthenticated } = useSimpleAuth()

@@ -4,6 +4,11 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import Product from "../cards/Product"
 import "./ProductCategory.css"
 
+//Author: Danny Barker
+//Purpose: Shows a product category with a link to its detail page and then lists out, up to 3, products.
+//Methods: takes one category at a time and also uses a GET call to get category specific products.
+
+
 const ProductCategory = props => {
     const [products, setProducts] = useState([])
 

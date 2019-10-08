@@ -1,6 +1,10 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 
+//Author: Danny Barker
+//Purpose: Show products to user as a card
+//Methods: Takes one product object, at a time, and displays it to the DOM.
+
 const Product = props => {
 
     return (
@@ -23,7 +27,7 @@ const Product = props => {
                   :
                   ""
               }
-              <p className="card-text">${props.product.price}</p>
+              <p className="card-text">${props.product.price.toFixed(2)}</p>
               <p className="card-text">Quantity: <b>{props.product.quantity}</b> available</p>
             </div>
           </div>
