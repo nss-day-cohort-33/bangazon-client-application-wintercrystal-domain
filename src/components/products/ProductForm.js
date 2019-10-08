@@ -3,6 +3,9 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import { request } from "http"
 // import {Date} from core-js
 
+// Author: Dustin Hobson
+// Purpose: Render New Product Form and Functionality to add new product to DB
+// Methods: GET, POST
 const ProductForm = props => {
 
     const { isAuthenticated } = useSimpleAuth()
@@ -17,38 +20,17 @@ const ProductForm = props => {
 
 
 
-
-    // const addImage = () => {
-    //     fetch('http://localhost:8000/images', {
-    //         "method": "POST",
-    //         "headers": {
-    //             "Accept": "application/json",
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-    //         },
-    //         "body": JSON.stringify({
-    //             "product_pic": request.data["image"],
-
-    //         })
-    //     })
-    //         .then(response => response.json())
-    //         .then(() => {
-    //             console.log("Added image")
-    //         })
-    // }
-
+// Function to add new product to DB
     const addProduct = (event) => {
         event.preventDefault()
         console.log(price.current.value)
+        // convery price string to number and force $00.00 format
         const money = Number(price.current.value).toFixed(2)
-
-
-
-
-
+        // check on if user has selected a product category
         if (product_category_value.current.value == "0") {
             window.alert("Please select a Product Category")
         }
+        // check on if quantiy of product is a whole number
         else if(quantity.current.value % 1 !== 0) {
             window.alert("Please enter a valid quantity")
         }
@@ -87,10 +69,6 @@ const ProductForm = props => {
         })
     }
     }
-
-
-
-
 
     return (
         <React.Fragment>
