@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
-import { Link } from 'react-router-dom'
+
 
 const ProductDetail = props => {
     const [order, setOrder] = useState([])
@@ -122,7 +122,13 @@ const ProductDetail = props => {
                     <h4>{props.product.price.toFixed(2)}</h4>
                     <p>{props.product.description}</p>
                     <h4>Quantity Available: {props.product.quantity}</h4>
-                    <button onClick={addOrder}>Add To Order</button>
+                    {
+                      isAuthenticated() ?
+                      <button onClick={addOrder}>Add To Order</button>
+                      :
+                      ""
+                    }
+
                 </section>
             }
         </>
