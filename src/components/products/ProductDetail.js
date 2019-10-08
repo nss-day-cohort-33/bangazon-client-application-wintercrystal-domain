@@ -95,7 +95,10 @@ const ProductDetail = props => {
                             product_id: props.product.id,
                             quantity: 1
                         })
+
                     })
+                    .then(response => response.json())
+                    .then(getOrders)
                 }
                 else {
                     fetch(`http://localhost:8000/orderproducts/${orderProduct[0].id}`, {

@@ -3,6 +3,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ProductCart from "../cards/productCart"
 
 
+
 const CartOrder = (props) => {
 
     const [order, setOrder] = useState([])
@@ -44,10 +45,42 @@ const CartOrder = (props) => {
         }
     }
 
+    const deleteOrder = () => {
+        if(isAuthenticated()){
+            fetch(`http://localhost:8000/orders/${order.id}`,{
+                "method": "DELETE",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+        }
+    }
+
+    const deleteOrderProduct = (id) => {
+        if(isAuthenticated()){
+            fetch(`http://localhost:8000/orderproducts/${id}`,{
+                "method": "DELETE",
+                "headers": {
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+        }
+
+    }
+
+    const deleteCart = () => {
+        deleteOrder()
+        orderProducts.forEach(orderProduct => {
+            deleteOrderProduct(orderProduct.id)
+        })
+        props.history.push("/")
+    }
+
     useEffect(getOrders, [])
     console.log(orderProducts)
     return (
         <>
+        <button onClick={deleteCart}>Delete Order</button>
         <h2>Items in your cart:</h2>
         <section className="cartProducts">
             {order ?
@@ -56,7 +89,10 @@ const CartOrder = (props) => {
                 return (
                     <div key={orderProduct.id}>
                     <ProductCart key={orderProduct.id} quantity={orderProduct.quantity} productId={orderProduct.product_id} />
-                    <button>delete</button>
+                    <button onClick={() => {
+                        deleteOrderProduct(orderProduct.id)
+                        getOrders()
+                        }} >delete</button>
                     </div>
                     )
             })
