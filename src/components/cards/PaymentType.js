@@ -2,8 +2,9 @@ import React from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
 const PaymentType = props => {
-    const oldDate = props.paymentType.expiration_date.split("-")
-    const newDate = `${oldDate[1]}-${oldDate[0]}`
+
+
+    const oldDate = props.paymentType.expiration_date.slice(0,7)
     const { isAuthenticated } = useSimpleAuth()
 
     const deletePayment = () => {
@@ -18,14 +19,13 @@ const PaymentType = props => {
 
       }
   }
-
     return (
         <>
 
           <div className={`card paymentType-${props.paymentType.id}`} style={{width: "18rem"}}>
             <div className="card-body">
               <h5 className="card-title">{props.paymentType.merchant_name}</h5>
-              <p className="card-text">Expeiration Date: {newDate}</p>
+              <p className="card-text">Expeiration Date: {oldDate}</p>
               <button onClick={deletePayment} className={`btn btn-primary paymentType-delete-${props.paymentType.id}`}>Delete</button>
             </div>
           </div>
