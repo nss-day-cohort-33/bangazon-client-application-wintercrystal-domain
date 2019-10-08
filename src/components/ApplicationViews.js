@@ -11,6 +11,7 @@ import HomePage from "./home/HomePage"
 import PaymentTypeForm from "./paymentmethod/PaymentTypeForm"
 import ProductForm from "./products/ProductForm"
 import PaymentTypes from "./paymentmethod/PaymentTypes"
+import MyProfile from "./profile/MyProfile"
 
 
 
@@ -109,6 +110,15 @@ const ApplicationViews = () => {
                 }}
             />
             <Route
+                exact path="/profile" render={props => {
+                    if(isAuthenticated()) return (
+                       <MyProfile />
+                    )
+                    else return <Redirect to="/login" />
+                }}
+            />
+
+            <Route
                 exact path="/products/new" render={props => {
                     if(isAuthenticated()) return (
                        <ProductForm  {...props} getProducts = {getProducts} categories={categories} />
@@ -130,17 +140,19 @@ const ApplicationViews = () => {
 
             <Route
                 exact path="/payment/create" render={props => {
-                    return (
-                       <PaymentTypeForm {...props} />
+                    if(isAuthenticated()) return (
+                        <PaymentTypeForm {...props} />
                     )
+                    else return <Redirect to="/login"/>
                 }}
             />
 
             <Route
                 exact path="/payment/options" render={props => {
-                    return (
+                    if(isAuthenticated()) return (
                        <PaymentTypes />
                     )
+                    else return <Redirect to="/login"/>
                 }}
             />
 
