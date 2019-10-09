@@ -1,5 +1,7 @@
 import { useState } from "react"
 
+// Authenticates users at login and register and logout. On login, sets token and user id to local storage. On logout local storage is cleared and loggedIn is set to false.
+
 const useSimpleAuth = () => {
 
     const [loggedIn, setIsLoggedIn] = useState(false)
@@ -48,6 +50,7 @@ const useSimpleAuth = () => {
     const logout = () => {
         setIsLoggedIn(false)
         localStorage.removeItem("bangazon_token")
+        localStorage.removeItem("id")
     }
 
     return { isAuthenticated, logout, login, register }

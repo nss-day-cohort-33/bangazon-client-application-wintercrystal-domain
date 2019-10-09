@@ -14,7 +14,6 @@ const CartOrder = (props) => {
     const getOrderProducts = (data) => {
         if (data.length !== 0)
         {
-            console.log(data)
             setOrder(data[0])
             fetch(`http://localhost:8000/orderproducts?order_id=${data[0].id}`, {
                 "method": "GET",
@@ -31,7 +30,6 @@ const CartOrder = (props) => {
 }
 
     const getOrders = () => {
-        console.log("im on top")
         if (isAuthenticated()) {
             fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}`, {
                 "method": "GET",
@@ -41,7 +39,6 @@ const CartOrder = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                console.log("im here")
                 getOrderProducts(data)})
         }
     }
@@ -78,7 +75,6 @@ const CartOrder = (props) => {
     }
 
     useEffect(getOrders, [])
-    console.log(orderProducts)
     return (
         <>
         {orderProducts.length > 0 ?
@@ -88,7 +84,6 @@ const CartOrder = (props) => {
         <section className="cartProducts">
             {order ?
             orderProducts.map(orderProduct => {
-                console.log(orderProduct)
                 return (
                     <div key={orderProduct.id}>
                     <ProductCart key={orderProduct.id} quantity={orderProduct.quantity} productId={orderProduct.product_id} />

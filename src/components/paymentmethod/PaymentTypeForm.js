@@ -13,6 +13,8 @@ const PaymentTypeForm = props => {
   const createDate = useRef()
   const { isAuthenticated } = useSimpleAuth()
 
+  // This does a post call that posts the payment type to the db
+
   const createPayment = () => {
       const expire = `${expireDate.current.value}-01`
       if (isAuthenticated()) {

@@ -19,7 +19,6 @@ const ProductCart = (props) => {
 
     useEffect(getProduct, [])
 
-    console.log(product)
     return (
         <>
             <div className={`card product-${product.id}`} style={{width: "18rem"}}>
@@ -40,7 +39,7 @@ const ProductCart = (props) => {
                   ""
               }
               <p className="card-text">Quantity: <b>{props.quantity}</b></p>
-              <p className="card-text">${(+product.price * +props.quantity)}</p>
+              <p className="card-text">${(+product.price * +props.quantity).toFixed(2)}</p>
                 </div>
             </div>
         </>

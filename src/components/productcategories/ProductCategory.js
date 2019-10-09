@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import Product from "../cards/Product"
 import "./ProductCategory.css"
 
@@ -11,6 +10,8 @@ import "./ProductCategory.css"
 
 const ProductCategory = props => {
     const [products, setProducts] = useState([])
+
+    // Fetch call that gets all the products within a single category. Uses a query param that passes in a category id to get specific products back and then it changes products array to hold products of that category
 
     const getProducts = () => {
             fetch(`http://localhost:8000/products?category=${props.category.id}`, {
@@ -25,6 +26,9 @@ const ProductCategory = props => {
     }
 
     useEffect(getProducts, [])
+
+    // It will return components based off of the terinary statement. Which, is checkout the products array has atleast one product in it. If a category has no products in it, then it will return nothing and not populate the DOM.
+    // There is a second terinary state that controls the number of products being rendered to the DOM. If the path is "/productcategories" then up to three products per category will be listed, if the path is not "/productcategories" then all products within a category will be listed.
 
     return (
         <>

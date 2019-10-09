@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import Product from "../cards/Product"
 import "./HomePage.css"
 
@@ -7,7 +6,6 @@ import "./HomePage.css"
 
 const HomePage = props => {
     const [products, setProducts] = useState([])
-    const { isAuthenticated } = useSimpleAuth()
 
 
     const getQuantity = () => {
@@ -22,7 +20,7 @@ const HomePage = props => {
               .then((response) => {
                   setProducts(response.reverse())
                 })
-           
+
       }
 
     useEffect(getQuantity, [])

@@ -12,6 +12,8 @@ const PaymentType = props => {
     const oldDate = props.paymentType.expiration_date.slice(0,7)
     const { isAuthenticated } = useSimpleAuth()
 
+    // this fetch call deletes a specific payment. It does not take any arguments because there is not more than one payment type that it's dealing with in this component, so we are able to just pass the id within the url.
+
     const deletePayment = () => {
       if (isAuthenticated()) {
           fetch(`http://localhost:8000/paymenttypes/${props.paymentType.id}`, {

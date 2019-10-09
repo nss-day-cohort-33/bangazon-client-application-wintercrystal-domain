@@ -13,6 +13,8 @@ const ProductCategories = props => {
     const [paymentTypes, setPaymentTypes] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
+    // this fetch call gets all the payment types that are specific to this user. It takes a query param of customer id, which we have saved in local storage. That's why it isn't being passed in as an argument
+
     const getPaymentTypes = () => {
         if (isAuthenticated()) {
             fetch(`http://localhost:8000/paymenttypes?customer=${localStorage.getItem("id")}`, {
@@ -27,6 +29,8 @@ const ProductCategories = props => {
     }
 
     useEffect(getPaymentTypes, [])
+
+    // This terinary statement checks whether there is atleast one payment type with this user. If there is atleast one then payment options with user payment types are shown. If there is not one, then a link is given for a user to create a payment type.
 
     return (
         <>
