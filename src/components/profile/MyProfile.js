@@ -1,8 +1,6 @@
 import React from "react"
 import { withRouter } from "react-router-dom"
 
-
-
 // Author: Dustin Hobson
 // Purpose: Render 'My Profile' Page with functioning links to payment options/form for authenticated users
 const Profile = props => {
@@ -17,10 +15,6 @@ const Profile = props => {
             <a href='/payment/create'>
             <h4>Add New Payment Type</h4>
             </a>
-
-
-
-
 
         </React.Fragment>
     )
