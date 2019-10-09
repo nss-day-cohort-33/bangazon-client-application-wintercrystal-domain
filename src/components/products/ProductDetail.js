@@ -22,7 +22,6 @@ const ProductDetail = props => {
             // if there isnt an open order we'll just set the order and leave orderProduct empty
             if (data.length !== 0)
             {
-                console.log(data)
                 setOrder(data[0])
                 fetch(`http://localhost:8000/orderproducts?product_id=${props.product.id}&order_id=${data[0].id}`, {
                     "method": "GET",
@@ -62,7 +61,6 @@ const ProductDetail = props => {
             // If an open order does not exist one will be created, then an order_product relation will be created
             // with an order_id of the order just created and a product id of the current product
             if (order.length === 0) {
-                console.log("hello")
                 fetch(`http://localhost:8000/orders`, {
                     "method": "POST",
                     "headers": {
@@ -77,7 +75,6 @@ const ProductDetail = props => {
                 })
                 .then(response => response.json())
                 .then((data) => {
-                    console.log(data)
                     fetch(`http://localhost:8000/orderproducts`, {
                         "method": "POST",
                         "headers": {
@@ -100,8 +97,6 @@ const ProductDetail = props => {
                 // If an order product relation does not exist, make one
                 if (orderProduct.length === 0)
                 {
-                    console.log("goodbye")
-                    console.log(order)
                     fetch(`http://localhost:8000/orderproducts`, {
                         "method": "POST",
                         "headers": {
