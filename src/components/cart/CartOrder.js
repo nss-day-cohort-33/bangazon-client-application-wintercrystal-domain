@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link } from 'react-router-dom'
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ProductCart from "../cards/productCart"
 
@@ -104,7 +105,12 @@ const CartOrder = (props) => {
         </section>
         </>
           :
+          <>
           <h1>No items in cart!</h1>
+          <Link className="nav-link" to="/productcategories">
+            Add Products
+          </Link>
+          </>
           }
 
 
