@@ -33,13 +33,23 @@ const ProductCategory = props => {
                 <Link className="nav-link" to={`/productcategories/${props.category.id}`}>
                 <h3>{props.category.name}({products.length})</h3>
                 </Link>
-                <div className={`productDiv category-${props.category.id}`}>
+                { window.location.pathname === "/productcategories" ?
+                  <div className={`productDiv category-${props.category.id}`}>
                   {
                       products.slice(0, 3).map(product =>
                           <Product key={product.id} product={product} showCategory={false} />
                       )
                   }
                 </div>
+                :
+                <div className={`productDiv category-${props.category.id}`}>
+                  {
+                      products.map(product =>
+                          <Product key={product.id} product={product} showCategory={false} />
+                      )
+                  }
+                </div>
+                }
             </article>
             :
             ""

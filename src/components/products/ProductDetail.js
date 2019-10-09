@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
+import { Link } from 'react-router-dom'
 
 
 //Author: Daniel Krusch
@@ -139,16 +140,18 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
-                    <h4>{props.product.price}</h4>
+                    <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
+                    <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
-                    <h4>Quantity Available: {props.product.quantity}</h4>
+                    <h4>Quantity: {props.product.quantity}<font size="1"> available</font></h4>
                     {
                       isAuthenticated() ?
                       <button onClick={addOrder}>Add To Order</button>
                       :
-                      ""
+                      <Link className="nav-link" to="/login">
+                      Sign in, to make an order!
+                      </Link>
                     }
-
                 </section>
             }
         </>

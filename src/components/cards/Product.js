@@ -28,7 +28,7 @@ const Product = props => {
                   ""
               }
               <p className="card-text">${props.product.price.toFixed(2)}</p>
-              <p className="card-text">Quantity: <b>{props.product.quantity}</b> available</p>
+              <p className="card-text">Quantity: <b>{props.product.quantity}</b> <font size="1">available</font></p>
             </div>
           </div>
 

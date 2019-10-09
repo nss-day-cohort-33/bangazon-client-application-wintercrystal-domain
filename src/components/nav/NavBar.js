@@ -15,16 +15,17 @@ const NavBar = props => {
                 <li className="nav-item">
                     <Link className="nav-link" to="/productcategories">Product Categories</Link>
                 </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/profile">My Profile</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/cart">Cart</Link>
-                </li>
 
 
                 {
                     isAuthenticated() ?
+                    <>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/profile">My Settings</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/cart">Cart</Link>
+                        </li>
                         <li className="nav-item">
                             <button className="nav-link fakeLink"
                                 onClick={() => {
@@ -35,7 +36,8 @@ const NavBar = props => {
                                 }
                                 }
                             >Logout</button>
-                        </li> :
+                        </li>
+                        </> :
                         <>
                         <li className="nav-item">
                             <Link className="nav-link" to="/login">Login</Link>
