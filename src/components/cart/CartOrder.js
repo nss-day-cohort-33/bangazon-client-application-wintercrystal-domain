@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ProductCart from "../cards/productCart"
 
-
+//Author: Tyler Carpenter
+//Purpose: to show the user their items that they have selected to buy.
+//Methods: getOrder and getOrderProduct is Daniel K.'s code. the delete methods are created by me.
 
 const CartOrder = (props) => {
 
@@ -45,6 +47,7 @@ const CartOrder = (props) => {
         }
     }
 
+    //method to delete order
     const deleteOrder = () => {
         if(isAuthenticated()){
             fetch(`http://localhost:8000/orders/${order.id}`,{
@@ -56,6 +59,7 @@ const CartOrder = (props) => {
         }
     }
 
+    //method to delete OrderProduct
     const deleteOrderProduct = (id) => {
         if(isAuthenticated()){
             fetch(`http://localhost:8000/orderproducts/${id}`,{
@@ -68,6 +72,7 @@ const CartOrder = (props) => {
 
     }
 
+    //this method will delete order and loop through every orderProduct and delete them
     const deleteCart = () => {
         deleteOrder()
         orderProducts.forEach(orderProduct => {
@@ -83,6 +88,7 @@ const CartOrder = (props) => {
         <button onClick={deleteCart}>Delete Order</button>
         <h2>Items in your cart:</h2>
         <section className="cartProducts">
+            {/* ternary statement to load the rest of the code after the page has been mounted */}
             {order ?
             orderProducts.map(orderProduct => {
                 console.log(orderProduct)

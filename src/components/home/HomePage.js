@@ -3,7 +3,9 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import Product from "../cards/Product"
 import "./HomePage.css"
 
-
+//Author: Tyler Carpenter
+//Purpose: Home Page will show the 20 most recent items added to sell by users
+//Methods: getQuantity by specified number.
 
 const HomePage = props => {
     const [products, setProducts] = useState([])
@@ -22,7 +24,7 @@ const HomePage = props => {
               .then((response) => {
                   setProducts(response.reverse())
                 })
-           
+
       }
 
     useEffect(getQuantity, [])
@@ -37,7 +39,7 @@ const HomePage = props => {
           <h3>Here are some of the most recent products:</h3>
           <div className="homePage-Div">
           {products.length > 0 ?
-
+          // looping through products and displaying the information in a card component
           products.map(product =>{
               return( <Product key={product.id} product={product} showCategory={true} /> )
           })
