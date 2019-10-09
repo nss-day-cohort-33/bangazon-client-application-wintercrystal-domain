@@ -1,6 +1,11 @@
 import React, { useRef } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
+//Author: Danny Barker
+//Purpose: Create a payment method
+//Methods: If user has filled out all the correct input fields, on submit, the payment method will be created and stored with the current users id. Uses POST call and then pushed user to payment options page.
+
+
 const PaymentTypeForm = props => {
   const merchant = useRef()
   const accountNumber = useRef()

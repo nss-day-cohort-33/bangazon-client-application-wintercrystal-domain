@@ -112,6 +112,7 @@ const ProductDetail = props => {
                             product_id: props.product.id,
                             quantity: 1
                         })
+
                     })
                     .then(response => response.json())
                     .then(getOrders)
@@ -138,7 +139,7 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
-                    <h4>{props.product.price.toFixed(2)}</h4>
+                    <h4>{props.product.price}</h4>
                     <p>{props.product.description}</p>
                     <h4>Quantity Available: {props.product.quantity}</h4>
                     {
