@@ -3,6 +3,9 @@ import { Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
+// Author: Danny & Dustin (Changed elements of Nav)
+// Purpose: Display Nav bar with functional links for clientside
+
 const NavBar = props => {
     const { isAuthenticated, logout } = useSimpleAuth()
 
