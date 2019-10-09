@@ -1,6 +1,4 @@
-import React, {useRef, useEffect, useState} from "react"
-import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
-import { request } from "http"
+import React, {useRef} from "react"
 // import {Date} from core-js
 
 // Author: Dustin Hobson
@@ -8,8 +6,6 @@ import { request } from "http"
 // Methods: GET, POST
 const ProductForm = props => {
 
-    const { isAuthenticated } = useSimpleAuth()
-    const [categories, setCategories] = useState([])
     const name = useRef()
     const price = useRef()
     const description = useRef()
@@ -27,7 +23,7 @@ const ProductForm = props => {
         // convery price string to number and force $00.00 format
         const money = Number(price.current.value).toFixed(2)
         // check on if user has selected a product category
-        if (product_category_value.current.value == "0") {
+        if (product_category_value.current.value === "0") {
             window.alert("Please select a Product Category")
         }
         // check on if quantiy of product is a whole number
@@ -145,17 +141,6 @@ const ProductForm = props => {
 
                     />
                 </div>
-
-                {/* <div>
-                    <label htmlFor="pImage">Image</label>
-                    <input
-                    ref={pImage}
-                    name="pImage"
-                    required
-                    type="number"
-
-                    />
-                </div> */}
 
 
 
