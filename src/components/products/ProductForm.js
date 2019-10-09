@@ -31,8 +31,12 @@ const ProductForm = props => {
             window.alert("Please select a Product Category")
         }
         // check on if quantiy of product is a whole number
-        else if(quantity.current.value % 1 !== 0) {
+        else if(quantity.current.value == 0 || quantity.current.value % 1 !== 0) {
             window.alert("Please enter a valid quantity")
+        }
+        // check on if price is $10,000 or less
+        else if ( money < .01 || money > 10000) {
+            window.alert("Product price must be greater than $0 and cannot exceed $10,000")
         }
         else {
 
@@ -101,13 +105,12 @@ const ProductForm = props => {
                 </div>
                 <div >
                     <label htmlFor="description">Description:</label>
-                    <input
+                    <textarea
                     ref={description}
                     name="description"
-                    required
-                    type="textarea"
+                    required>
 
-                    />
+                    </textarea>
                 </div>
                 <div>
                     <label htmlFor="quantity">Quantity:</label>
@@ -145,20 +148,6 @@ const ProductForm = props => {
 
                     />
                 </div>
-
-                {/* <div>
-                    <label htmlFor="pImage">Image</label>
-                    <input
-                    ref={pImage}
-                    name="pImage"
-                    required
-                    type="number"
-
-                    />
-                </div> */}
-
-
-
                     <button onClick={addProduct}
                     >List Product</button>
             </form>

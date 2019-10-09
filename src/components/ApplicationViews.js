@@ -85,27 +85,6 @@ const ApplicationViews = () => {
                 }}
             />
 
-            {/* <Route
-                path="/areas" render={props => {
-                    return (
-                        <>
-                            <h1>Areas</h1>
-                            <img className="swings" src={require('./home/swings.jpeg')} alt="My Dog" />
-                        </>
-                    )
-                }}
-            />
-
-            <Route
-                path="/attractions" render={props => {
-                    return (
-                        <>
-                            <h1>Attractions</h1>
-                            <img className="swings" src={require('./home/swings.jpeg')} alt="My Dog" />
-                        </>
-                    )
-                }}
-            /> */}
 
             <Route
                 exact path="/productcategories" render={props => {
@@ -114,10 +93,11 @@ const ApplicationViews = () => {
                     )
                 }}
             />
+            {/* Redirect unauthenticated user to login page */}
             <Route
                 exact path="/profile" render={props => {
                     if(isAuthenticated()) return (
-                       <MyProfile />
+                       <MyProfile  />
                     )
                     else return <Redirect to="/login" />
                 }}
