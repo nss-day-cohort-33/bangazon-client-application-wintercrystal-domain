@@ -143,7 +143,7 @@ const ProductDetail = props => {
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
-                    <h4>Quantity Available: {props.product.quantity}<font size="1"> available</font></h4>
+                    <h4>Quantity: {props.product.quantity}<font size="1"> available</font></h4>
                     {
                       isAuthenticated() ?
                       <button onClick={addOrder}>Add To Order</button>
