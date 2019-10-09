@@ -23,11 +23,10 @@ const ProductForm = props => {
 // Function to add new product to DB
     const addProduct = (event) => {
         event.preventDefault()
-        console.log(price.current.value)
         // convery price string to number and force $00.00 format
         const money = Number(price.current.value).toFixed(2)
         // check on if user has selected a product category
-        if (product_category_value.current.value == "0") {
+        if (product_category_value.current.value === "0") {
             window.alert("Please select a Product Category")
         }
         // check on if quantiy of product is a whole number
@@ -39,12 +38,12 @@ const ProductForm = props => {
             window.alert("Product price must be greater than $0 and cannot exceed $10,000")
         }
         else {
-
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
+        // Date format
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
-        console.log(`${yyyy}-${mm}-${dd}`)
+
         fetch('http://localhost:8000/products', {
             "method": "POST",
             "headers": {
@@ -136,8 +135,7 @@ const ProductForm = props => {
                         )
                     }
                     </select>
-
-    </div>
+                </div>
                 <div>
                     <label htmlFor="location">Location:</label>
                     <input
