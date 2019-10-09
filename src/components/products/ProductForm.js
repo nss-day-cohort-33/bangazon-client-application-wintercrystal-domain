@@ -27,7 +27,7 @@ const ProductForm = props => {
             window.alert("Please select a Product Category")
         }
         // check on if quantiy of product is a whole number
-        else if(quantity.current.value == 0 || quantity.current.value % 1 !== 0) {
+        else if(quantity.current.value === 0 || quantity.current.value % 1 !== 0) {
             window.alert("Please enter a valid quantity")
         }
         // check on if price is $10,000 or less
