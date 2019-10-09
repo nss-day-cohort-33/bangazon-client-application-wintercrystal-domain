@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import Product from "../cards/Product"
 import "./HomePage.css"
+import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
 //Author: Tyler Carpenter
 //Purpose: Home Page will show the 20 most recent items added to sell by users
@@ -8,6 +9,7 @@ import "./HomePage.css"
 
 const HomePage = props => {
     const [products, setProducts] = useState([])
+    const {isAuthenticated} = useSimpleAuth()
 
 
     const getQuantity = () => {
@@ -30,9 +32,13 @@ const HomePage = props => {
     return(
         <>
           <h1> WELCOME TO BANGAZON</h1>
+
+          {isAuthenticated() ?
+
           <a href='/products/new'>
               <h4>Sell a Product</h4>
-              </a>
+              </a> : ""}
+
 
           <h3>Here are some of the most recent products:</h3>
           <div className="homePage-Div">

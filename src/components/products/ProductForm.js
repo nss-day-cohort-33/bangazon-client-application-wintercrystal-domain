@@ -36,11 +36,6 @@ const ProductForm = props => {
         }
         else {
 
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-        console.log(`${yyyy}-${mm}-${dd}`)
         fetch('http://localhost:8000/products', {
             "method": "POST",
             "headers": {
@@ -53,7 +48,7 @@ const ProductForm = props => {
                 "price": money,
                 "description": description.current.value,
                 "quantity": quantity.current.value,
-                "created_date": `${yyyy}-${mm}-${dd}`,
+                "created_date": new Date().toISOString().slice(0,10),
                 "product_category_id": product_category_value.current.value,
                 "location": location.current.value,
                 "image":""
@@ -133,7 +128,7 @@ const ProductForm = props => {
                     }
                     </select>
 
-    </div>
+                </div>
                 <div>
                     <label htmlFor="location">Location:</label>
                     <input
