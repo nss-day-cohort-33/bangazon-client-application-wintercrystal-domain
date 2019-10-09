@@ -17,10 +17,12 @@ import MyProfile from "./profile/MyProfile"
 
 
 const ApplicationViews = () => {
+    // Fetches all products and categories to be used in product categories and product details pages
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
+    // Fetch from database then set state with products
     const getProducts = () => {
             fetch(`http://localhost:8000/products`, {
                 "method": "GET",
@@ -33,6 +35,7 @@ const ApplicationViews = () => {
                 .then(setProducts)
     }
 
+    // Fetch from database then set state with categories
     const getCategories = () => {
             fetch(`http://localhost:8000/productcategories`, {
                 "method": "GET",
@@ -45,6 +48,7 @@ const ApplicationViews = () => {
                 .then(setCategories)
     }
 
+    // Runs both fetches in sequence when application starts
     useEffect(() => {
         getProducts()
         getCategories()
@@ -71,6 +75,8 @@ const ApplicationViews = () => {
                 }}
             />
 
+            {/* Gets the id from the end of the path and finds that specific product from the state we set
+                Then passes that product object into the product detail component */}
             <Route exact path="/products/:productId(\d+)" render={(props) => {
                 let product = products.find(product => product.id === +props.match.params.productId)
                 if (product) {
@@ -117,6 +123,7 @@ const ApplicationViews = () => {
                 }}
             />
 
+            {/* Passes in the fetch statement and categories for use by the product form */}
             <Route
                 exact path="/products/new" render={props => {
                     if(isAuthenticated()) return (
@@ -126,6 +133,10 @@ const ApplicationViews = () => {
                 }}
             />
 
+
+            {/* Gets the id from the end of the path and finds that specific product category from the state we set
+                Then passes that category object into the product category component
+                If that specific product category doesn't exist, a 404 object will be passed in */}
             <Route exact path="/productcategories/:categoryId(\d+)" render={(props) => {
               let category = categories.find(category =>
               category.id === +props.match.params.categoryId
@@ -137,6 +148,8 @@ const ApplicationViews = () => {
               }}
             />
 
+            {/* If the user is logged in and authenticated they will go to the payment form
+                if not they will be forced to login */}
             <Route
                 exact path="/payment/create" render={props => {
                     if(isAuthenticated()) return (
@@ -146,6 +159,8 @@ const ApplicationViews = () => {
                 }}
             />
 
+            {/* If the user is logged in and authenticated they will go to the payment page
+                if not they will be forced to login */}
             <Route
                 exact path="/payment/options" render={props => {
                   if (isAuthenticated()) {
