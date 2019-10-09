@@ -81,11 +81,9 @@ const CartOrder = (props) => {
     return (
         <>
         {orderProducts.length > 0 ?
+        <>
           <button onClick={deleteCart}>Delete Order</button>
-          :
-          ""
-          }
-        <h2>Items in your cart:</h2>
+          <h2>Items in your cart:</h2>
         <section className="cartProducts">
             {order ?
             orderProducts.map(orderProduct => {
@@ -104,6 +102,11 @@ const CartOrder = (props) => {
          ""
         }
         </section>
+        </>
+          :
+          <h1>No items in cart!</h1>
+          }
+
 
         </>
     )
