@@ -18,12 +18,16 @@ const ProductForm = props => {
 
 // Function to add new product to DB
     const addProduct = (event) => {
+        var format = /[!@#$%^&*()]+/;
         event.preventDefault()
         console.log(price.current.value)
         // convery price string to number and force $00.00 format
         const money = Number(price.current.value).toFixed(2)
         // check on if user has selected a product category
-        if (product_category_value.current.value === "0") {
+        if ((name.current.value).match(format) || (description.current.value).match(format)) {
+            window.alert("Please enter product name/details with no special characters; ie. no '!@#$%^&*()'")
+        }
+        else if (product_category_value.current.value === "0") {
             window.alert("Please select a Product Category")
         }
         // check on if quantiy of product is a whole number
