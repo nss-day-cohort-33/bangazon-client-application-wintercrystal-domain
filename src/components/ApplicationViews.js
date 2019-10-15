@@ -14,6 +14,7 @@ import PaymentTypes from "./paymentmethod/PaymentTypes"
 import CardOrder from "./cart/CartOrder"
 import MyProfile from "./profile/MyProfile"
 import MyProducts from "./products/MyProducts"
+import MyProfileEditForm from "./profile/MyProfileEditForm"
 
 
 
@@ -172,6 +173,14 @@ const ApplicationViews = () => {
                     } else {
                       return <Redirect to="/login" />
                     }
+                }}
+            />
+            <Route
+                exact path="/profile/update" render={props => {
+                    if(isAuthenticated()) return (
+                        <MyProfileEditForm {...props} />
+                    )
+                    else return <Redirect to="/login"/>
                 }}
             />
 
