@@ -47,7 +47,7 @@ const OrderDetail = props => {
 
     return (
         <>
-            {console.log(total)}
+            {console.log(props.order)}
             {
                 <section className="order-details">
                     <h3>Order {props.order.id}</h3>

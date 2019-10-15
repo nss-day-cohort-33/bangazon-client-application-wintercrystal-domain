@@ -16,7 +16,7 @@ const OrderHistory = props => {
     // First we get the open orders and then call getOrderProducts
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=true`, {
                 "method": "GET",
                 "headers": {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
