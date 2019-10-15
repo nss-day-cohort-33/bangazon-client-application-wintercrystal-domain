@@ -34,6 +34,7 @@ const HomePage = props => {
               })
               .then(response => response.json())
               .then((response) => {
+                  setCity(undefined)
                   setProducts(response.reverse())
                 })
 
@@ -41,23 +42,20 @@ const HomePage = props => {
 
     const searchProducts = event => {
       event.preventDefault()
-
       let query = searchTerm.current.value
-      setCity(query)
-      console.log(query)
-      setCity(query)
       fetch(`http://localhost:8000/products?location=${query}`, {
-                  "method": "GET",
-                  "headers": {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                  }
-              })
-              .then(response => response.json())
-              .then((response) => {
-                  setProducts(response.reverse())
-                })
-              .then(dynamicHeader())
+        "method": "GET",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        }
+      })
+      .then(response => response.json())
+      .then((response) => {
+        setCity(query)
+        setProducts(response.reverse())
+      })
+      .then(dynamicHeader())
     }
     // Function to decide which header to display based on if user has searched for products, is viewing home page 20 products, or has entered a non-searchable city or city with no results
     const dynamicHeader = (city) => {
@@ -103,8 +101,9 @@ const HomePage = props => {
             <button
             id="clear"
             onClick = {(event) => {
-              setCity(undefined)
-              getQuantity(event)}}
+              getQuantity(event)
+
+              }}
             >Clear</button>
           </form>
 
