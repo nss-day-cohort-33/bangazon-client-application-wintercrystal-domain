@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react"
+import React, { useRef, useState, useEffect} from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
 //Author: Mary West
@@ -14,6 +14,11 @@ const ProfileEditForm = props => {
 
 // PUT request updates last name, phone number, and address
 
+  useEffect(()=>{
+    last_name.current.value = props.history.location.state.user.last_name
+    phone_number.current.value = props.history.location.state.phone_number
+    address.current.value = props.history.location.state.address
+  },[])
 
   const updateProfile = (last_name, phone_number, address) => {
     // const updatedProfile = {
