@@ -11,4 +11,4 @@ When your server is running, you can run "npm start" from the command line and s
 You will only be able to see products and categories.
 Register as a new user, in order, to use all features of this app.
 
-HELLO
+
