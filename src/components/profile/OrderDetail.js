@@ -30,7 +30,6 @@ const OrderDetail = props => {
     let total = 0
 
     orderProducts.map(orderProduct => {
-        console.log("quan?", productQuantities)
         // const pathArray = orderProduct.product.url.split('/');
         // const productId = pathArray[4]
         if (productQuantities[orderProduct.product.name]) {
@@ -47,7 +46,6 @@ const OrderDetail = props => {
 
     return (
         <>
-            {console.log(props.order)}
             {
                 <section className="order-details">
                     <h3>Order {props.order.id}</h3>

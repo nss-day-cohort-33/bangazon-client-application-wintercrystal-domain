@@ -130,7 +130,6 @@ const ProductDetail = props => {
         }
     }
 
-    console.log(order, orderProduct)
     return (
         <>
             {

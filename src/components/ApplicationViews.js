@@ -96,7 +96,6 @@ const ApplicationViews = () => {
                 Then passes that product object into the product detail component */}
             <Route exact path="/products/:productId(\d+)" render={(props) => {
                 let product = products.find(product => product.id === +props.match.params.productId)
-                console.log("app prod", product, orders, products)
                 if (product) {
                     return <ProductDetail {...props} product={product} />
                 }
@@ -196,7 +195,6 @@ const ApplicationViews = () => {
                 If that specific product category doesn't exist, a 404 object will be passed in */}
             <Route exact path="/orderhistory/:orderId(\d+)" render={(props) => {
               let order = orders.find(order => order.id === +props.match.params.orderId)
-              console.log("app ord", order, orders, products)
               if (order) {
                 return <OrderDetail {...props} order={order} />
               }
