@@ -13,6 +13,7 @@ import ProductForm from "./products/ProductForm"
 import PaymentTypes from "./paymentmethod/PaymentTypes"
 import CardOrder from "./cart/CartOrder"
 import MyProfile from "./profile/MyProfile"
+import MyProducts from "./products/MyProducts"
 
 
 
@@ -98,6 +99,15 @@ const ApplicationViews = () => {
                 exact path="/profile" render={props => {
                     if(isAuthenticated()) return (
                        <MyProfile  />
+                    )
+                    else return <Redirect to="/login" />
+                }}
+            />
+
+            <Route
+                exact path="/myProducts" render={props => {
+                    if(isAuthenticated()) return (
+                       <MyProducts {...props}  />
                     )
                     else return <Redirect to="/login" />
                 }}

@@ -13,7 +13,7 @@ const ProductCategories = props => {
             <article className="categoryList">
                 {
                     props.categories.map(category =>
-                        <ProductCategory key={category.id} category={category} />
+                        <ProductCategory key={category.id} category={category} showThree={true} />
                     )
                 }
             </article>
