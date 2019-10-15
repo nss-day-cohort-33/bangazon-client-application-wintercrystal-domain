@@ -22,7 +22,6 @@ const Product = props => {
         .then(props.getMyProducts)
     }
   }
-
     return (
         <>
 
@@ -47,7 +46,10 @@ const Product = props => {
               <p className="card-text">Quantity: <b>{props.product.quantity}</b> <font size="1">available</font></p>
               {
                 +props.product.customer.url.slice(-1) === +localStorage.getItem("id") ?
-                <button onClick={deleteProduct}>Delete Product</button>
+                <>
+              <p>Quantity Sold: {props.product.number_sold}</p>
+                  <button onClick={deleteProduct}>Delete Product</button>
+                </>
                 :
                 ""
               }

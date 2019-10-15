@@ -22,7 +22,7 @@ const HomePage = props => {
               })
               .then(response => response.json())
               .then((response) => {
-                  setProducts(response.reverse())
+                  setProducts(response)
                 })
 
       }

@@ -41,7 +41,7 @@ const MyProducts = props => {
           {myProducts.length > 0 ?
           // looping through products and displaying the information in a card component
           myProducts.map(product =>{
-              return( <Product key={product.id} product={product} showCategory={true} showCategory={true} getMyProducts={getMyProducts} /> )
+              return( <Product key={product.id} product={product} showCategory={true} showCategory={true} showSold={true} getMyProducts={getMyProducts} /> )
           })
 
 

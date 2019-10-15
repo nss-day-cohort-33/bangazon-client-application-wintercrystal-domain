@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ProductCart from "../cards/productCart"
+import { CLIENT_RENEG_LIMIT } from "tls"
 
 //Author: Tyler Carpenter
 //Purpose: to show the user their items that they have selected to buy.
@@ -40,8 +41,7 @@ const CartOrder = (props) => {
                 }
             })
             .then(response => response.json())
-            .then(data => {
-                getOrderProducts(data)})
+            .then(getOrderProducts)
         }
     }
 
@@ -90,6 +90,7 @@ const CartOrder = (props) => {
             {/* ternary statement to load the rest of the code after the page has been mounted */}
             {order ?
             orderProducts.map(orderProduct => {
+                console.log(orderProduct)
                 return (
                     <div key={orderProduct.id}>
                     <ProductCart key={orderProduct.id} quantity={orderProduct.quantity} productId={orderProduct.product_id} />
