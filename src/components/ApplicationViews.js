@@ -15,6 +15,7 @@ import CardOrder from "./cart/CartOrder"
 import MyProfile from "./profile/MyProfile"
 import OrderHistory from "./profile/OrderHistory"
 import OrderDetail from "./profile/OrderDetail"
+import MyProfileEditForm from "./profile/MyProfileEditForm"
 
 
 
@@ -182,6 +183,14 @@ const ApplicationViews = () => {
                     } else {
                       return <Redirect to="/login" />
                     }
+                }}
+            />
+            <Route
+                exact path="/profile/update" render={props => {
+                    if(isAuthenticated()) return (
+                        <MyProfileEditForm {...props} />
+                    )
+                    else return <Redirect to="/login"/>
                 }}
             />
 
