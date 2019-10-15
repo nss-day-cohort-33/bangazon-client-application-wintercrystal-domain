@@ -20,14 +20,14 @@ const ProfileEditForm = props => {
     address.current.value = props.history.location.state.address
   },[])
 
-  const updateProfile = (last_name, phone_number, address) => {
+  const updateProfile = () => {
     // const updatedProfile = {
     //   phone_number: '',
     //   address: '',
     //   user: localStorage.getItem( "id" )
     // }
       if (isAuthenticated()) {
-          fetch(`http://localhost:8000/customers${currentProfile.id}`, {
+          fetch(`http://localhost:8000/customers/${props.history.location.state.id}`, {
               "method": "PUT",
               "headers": {
                 "Accept": "application/json",
@@ -35,12 +35,11 @@ const ProfileEditForm = props => {
                 "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
               },
               "body": JSON.stringify({
-                "last_name": last_name,
-                "phone_number": phone_number,
-                "address": address
+                "last_name": last_name.current.value,
+                "phone_number": phone_number.current.value,
+                "address": address.current.value
             })
           })
-              .then(response => response.json())
               .then(() => {
                 props.history.push("/profile")
               })
