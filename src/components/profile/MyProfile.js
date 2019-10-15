@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
+import { Link } from 'react-router-dom'
 
 // Author: Dustin Hobson/ Mary West
 // Purpose: Render 'My Profile' Page with functioning links to payment options/form for authenticated users
@@ -11,6 +12,7 @@ const Profile = props => {
 
     const [getProfile, setProfile] = useState([])
     const { isAuthenticated } = useSimpleAuth()
+    const [currentProfile, setCurrentProfile] = useState({})
 
     const getCustomers = () => {
         if (isAuthenticated()) {
@@ -30,6 +32,27 @@ const Profile = props => {
 
     useEffect(getCustomers, [])
 
+
+    const updateProfile = (last_name, address, phone_number) => {
+        fetch(`http://localhost:8000/customers/${currentProfile.id}`, {
+            "method": "PUT",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+            },
+            "body": JSON.stringify({
+                "last_name": last_name,
+                "address": address,
+                "phone_number":phone_number,
+            })
+        })
+            .then(() => {
+                console.log("Updated!!!! YAY!!!!  🙌🏼")
+            })
+            .then(getCustomers)
+    }
+
     return (
         <React.Fragment>
         <>
@@ -42,10 +65,14 @@ const Profile = props => {
                         <p>{profile.user.first_name}</p>
                         <p>{profile.user.last_name}</p>
                         <p>{profile.user.email}</p>
-                        <p>{profile.user.phone_number}</p>
+                        <p>{profile.phone_number}</p>
                         <p>{profile.address}</p>
                     </ul>
-                    <button className= "btn btn-info">Edit</button>
+                <Link className="nav-link" to="/profile/update">
+                  <h6>Edit Profile</h6>
+                </Link>
+
+                    {/* <button onClick = {updateProfile} className= "btn btn-info">Edit</button> */}
                     <a href='/payment/options'>
                         <h4>Payment Options</h4>
                         </a>
