@@ -33,25 +33,25 @@ const Profile = props => {
     useEffect(getCustomers, [])
 
 
-    const updateProfile = (last_name, address, phone_number) => {
-        fetch(`http://localhost:8000/customers/${currentProfile.id}`, {
-            "method": "PUT",
-            "headers": {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-            },
-            "body": JSON.stringify({
-                "last_name": last_name,
-                "address": address,
-                "phone_number":phone_number,
-            })
-        })
-            .then(() => {
-                console.log("Updated!!!! YAY!!!!  🙌🏼")
-            })
-            .then(getCustomers)
-    }
+    // const updateProfile = (last_name, address, phone_number) => {
+    //     fetch(`http://localhost:8000/customers/${currentProfile.id}`, {
+    //         "method": "PUT",
+    //         "headers": {
+    //             "Accept": "application/json",
+    //             "Content-Type": "application/json",
+    //             "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+    //         },
+    //         "body": JSON.stringify({
+    //             "last_name": last_name,
+    //             "address": address,
+    //             "phone_number":phone_number,
+    //         })
+    //     })
+    //         .then(() => {
+    //             console.log("Updated!!!! YAY!!!!  🙌🏼")
+    //         })
+    //         .then(getCustomers)
+    // }
 
     return (
         <React.Fragment>
@@ -62,11 +62,11 @@ const Profile = props => {
                 return (
                     <div>
                     <ul>
-                        <p>{profile.user.first_name}</p>
-                        <p>{profile.user.last_name}</p>
-                        <p>{profile.user.email}</p>
-                        <p>{profile.phone_number}</p>
-                        <p>{profile.address}</p>
+                        <p><b>First Name:</b> {profile.user.first_name}</p>
+                        <p><b>Last Name:</b> {profile.user.last_name}</p>
+                        <p><b>Email:</b> {profile.user.email}</p>
+                        <p><b>Phone Number:</b> {profile.phone_number}</p>
+                        <p><b>Address:</b> {profile.address}</p>
                     </ul>
                 <Link className="nav-link" to="/profile/update">
                   <h6>Edit Profile</h6>
