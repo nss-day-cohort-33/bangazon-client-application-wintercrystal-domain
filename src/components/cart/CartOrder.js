@@ -93,7 +93,7 @@ const CartOrder = (props) => {
                 console.log(orderProduct)
                 return (
                     <div key={orderProduct.id}>
-                    <ProductCart key={orderProduct.id} quantity={orderProduct.quantity} productId={orderProduct.product_id} />
+                    <ProductCart key={orderProduct.id} quantity={orderProduct.quantity} productId={orderProduct.product.id} />
                     <button onClick={() => {
                         deleteOrderProduct(orderProduct.id)
                         getOrders()
