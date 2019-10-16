@@ -69,8 +69,7 @@ const ProductDetail = props => {
                     },
                     body: JSON.stringify({
                         created_date: datestring,
-                        customer_id: parseInt(localStorage.getItem("id"), 10),
-                        payment_id: null
+                        customer_id: parseInt(localStorage.getItem("id"), 10)
                     })
                 })
                 .then(response => response.json())
