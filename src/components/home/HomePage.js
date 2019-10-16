@@ -53,7 +53,7 @@ const HomePage = props => {
       .then(response => response.json())
       .then((response) => {
         setCity(query)
-        setProducts(response.reverse())
+        setProducts(response)
       })
       .then(dynamicHeader())
     }

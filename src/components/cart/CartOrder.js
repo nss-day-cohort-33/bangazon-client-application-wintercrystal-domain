@@ -34,7 +34,7 @@ const CartOrder = (props) => {
 
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=1`, {
                 "method": "GET",
                 "headers": {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
@@ -84,8 +84,18 @@ const CartOrder = (props) => {
         <>
         {orderProducts.length > 0 ?
         <>
-          <button onClick={deleteCart}>Delete Order</button>
           <h2>Items in your cart:</h2>
+          <div className="orderBtn-Div">
+            <button onClick={() => {
+              props.history.push("/cart/addPayment")
+            }}>
+            Complete Order
+            </button>
+            <button onClick={deleteCart}
+            >
+            Delete Order
+            </button>
+          </div>
         <section className="cartProducts">
             {/* ternary statement to load the rest of the code after the page has been mounted */}
             {order ?
@@ -93,7 +103,7 @@ const CartOrder = (props) => {
                 console.log(orderProduct)
                 return (
                     <div key={orderProduct.id}>
-                    <ProductCart key={orderProduct.id} quantity={orderProduct.quantity} productId={orderProduct.product.id} />
+                    <ProductCart key={orderProduct.id} productId={orderProduct.product.id} orderProducts={orderProducts} />
                     <button onClick={() => {
                         deleteOrderProduct(orderProduct.id)
                         getOrders()

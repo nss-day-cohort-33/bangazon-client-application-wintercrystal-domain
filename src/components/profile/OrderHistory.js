@@ -16,9 +16,11 @@ const OrderHistory = props => {
     // First we get the open orders and then call getOrderProducts
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=true`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=0`, {
                 "method": "GET",
                 "headers": {
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                 }
             })
@@ -38,7 +40,7 @@ const OrderHistory = props => {
             {
                 orders.map(order =>
                 {
-                    return (<OrderList {...props} order={order}></OrderList>)
+                    return (<OrderList key={order.id} {...props} order={order}></OrderList>)
                 })
             }
         </>
