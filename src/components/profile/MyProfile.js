@@ -63,15 +63,21 @@ const Profile = props => {
             }} >
               <h6>Edit Profile</h6>
             </Link>
+<<<<<<< HEAD
             <a href="/payment/options">
+=======
+
+            {/* <button onClick = {updateProfile} className= "btn btn-info">Edit</button> */}
+            <Link className="nav-link" to={`/payment/options`}>
+>>>>>>> master
               <h4>Payment Options</h4>
-            </a>
-            <a href="/payment/create">
+            </Link>
+            <Link className="nav-link" to={`/payment/create`}>
               <h4>Add New Payment Type</h4>
-            </a>
-            <a href='/orderhistory'>
-            <h4>View Order History</h4>
-            </a>
+            </Link>
+            <Link className="nav-link" to={`/orderhistory`}>
+              <h4>View Order History</h4>
+            </Link>
           </div>
         </main>
       </>
