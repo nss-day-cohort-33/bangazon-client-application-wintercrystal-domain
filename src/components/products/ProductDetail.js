@@ -105,8 +105,8 @@ const ProductDetail = props => {
                             "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                         },
                         body: JSON.stringify({
-                            order_id: data.id,
-                            product_id: props.product.id,
+                            order: data.id,
+                            product: props.product.id,
                             quantity: 1
                         })
                     })
@@ -127,8 +127,8 @@ const ProductDetail = props => {
                             "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                         },
                         body: JSON.stringify({
-                            order_id: order.id,
-                            product_id: props.product.id,
+                            order: order.id,
+                            product: props.product.id,
                             quantity: 1
                         })
 

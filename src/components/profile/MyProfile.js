@@ -69,6 +69,9 @@ const Profile = props => {
             <a href="/payment/create">
               <h4>Add New Payment Type</h4>
             </a>
+            <a href='/orderhistory'>
+            <h4>View Order History</h4>
+            </a>
           </div>
         </main>
       </>
