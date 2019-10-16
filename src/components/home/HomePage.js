@@ -30,7 +30,7 @@ const HomePage = props => {
                   "headers": {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+
 
                   }
               })
@@ -55,7 +55,7 @@ const HomePage = props => {
       .then(response => response.json())
       .then((response) => {
         setCity(query)
-        setProducts(response.reverse())
+        setProducts(response)
       })
       .then(dynamicHeader())
     }
