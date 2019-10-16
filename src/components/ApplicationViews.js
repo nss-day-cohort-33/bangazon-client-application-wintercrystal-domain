@@ -13,6 +13,8 @@ import ProductForm from "./products/ProductForm"
 import PaymentTypes from "./paymentmethod/PaymentTypes"
 import CardOrder from "./cart/CartOrder"
 import MyProfile from "./profile/MyProfile"
+import OrderHistory from "./profile/OrderHistory"
+import OrderDetail from "./profile/OrderDetail"
 import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
 
@@ -22,6 +24,7 @@ const ApplicationViews = () => {
     // Fetches all products and categories to be used in product categories and product details pages
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
+    const [orders, setOrders] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
     // Fetch from database then set state with products
@@ -31,6 +34,7 @@ const ApplicationViews = () => {
                 "headers": {
                   "Accept": "application/json",
                   "Content-Type": "application/json",
+                  "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                 }
             })
                 .then(response => response.json())
@@ -44,16 +48,32 @@ const ApplicationViews = () => {
                 "headers": {
                   "Accept": "application/json",
                   "Content-Type": "application/json",
+                  "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                 }
             })
                 .then(response => response.json())
                 .then(setCategories)
     }
 
+    // Fetch from database then set state with categories
+    const getOrders = () => {
+        fetch(`http://localhost:8000/orders`, {
+            "method": "GET",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+            }
+        })
+            .then(response => response.json())
+            .then(setOrders)
+    }
+
     // Runs both fetches in sequence when application starts
     useEffect(() => {
         getProducts()
         getCategories()
+        getOrders()
     }, [])
 
     return (
@@ -182,6 +202,25 @@ const ApplicationViews = () => {
                     )
                     else return <Redirect to="/login"/>
                 }}
+            />
+
+            <Route
+                exact path="/orderhistory" render={props => {
+                    return (
+                        <OrderHistory {...props} />
+                    )
+                }}
+            />
+
+            {/* Gets the id from the end of the path and finds that specific product category from the state we set
+                Then passes that category object into the product category component
+                If that specific product category doesn't exist, a 404 object will be passed in */}
+            <Route exact path="/orderhistory/:orderId(\d+)" render={(props) => {
+              let order = orders.find(order => order.id === +props.match.params.orderId)
+              if (order) {
+                return <OrderDetail {...props} order={order} />
+              }
+              }}
             />
 
         </React.Fragment>
