@@ -47,16 +47,21 @@ const ProductDetail = props => {
                 }
             })
             .then(response => response.json())
-            .then(data => getOrderProducts(data))
+            .then(data =>  {
+                console.log(data)
+                return getOrderProducts(data)
+            })
+
         }
     }
+
 
 
     // On mount get some orders
     useEffect(getOrders, [])
 
-    const addToFavorites = () => {
-        fetch('http://localhost:8000/products', {
+    const addToFavorites = (id) => {
+        fetch('http://localhost:8000/favorites', {
             "method": "POST",
             "headers": {
                 "Accept": "application/json",
@@ -64,10 +69,7 @@ const ProductDetail = props => {
                 "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
             },
             "body": JSON.stringify({
-                // "ride_id": props.ride.id,
-                "first_name": props.product.customer.user.first_name,
-                "last_name": props.product.customer.user.last_name
-
+                "seller_id": props.product.customer.user.id
             })
         })
             .then(response => response.json())
