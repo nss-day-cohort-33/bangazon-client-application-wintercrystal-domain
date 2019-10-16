@@ -24,6 +24,8 @@ const ProductCart = (props) => {
 
     useEffect(getProduct, [])
     console.log(product)
+
+
     return (
         <>
             <div className={`card product-${product.id}`} style={{width: "18rem"}}>

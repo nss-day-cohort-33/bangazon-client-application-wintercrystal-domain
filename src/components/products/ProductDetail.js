@@ -12,7 +12,6 @@ const ProductDetail = props => {
     // Order Product will contain an order product relation row if it exists
     const [orderProduct, setOrderProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
-    const [counter, setCounter] = useState(0)
 
     // For the created date field in order
     let datestring = new Date().toISOString().slice(0,10)
@@ -41,7 +40,7 @@ const ProductDetail = props => {
     // First we get the open orders and then call getOrderProducts
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=0`, {
                 "method": "GET",
                 "headers": {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`

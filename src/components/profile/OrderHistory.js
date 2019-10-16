@@ -16,7 +16,7 @@ const OrderHistory = props => {
     // First we get the open orders and then call getOrderProducts
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=0`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=1`, {
                 "method": "GET",
                 "headers": {
                   "Accept": "application/json",
