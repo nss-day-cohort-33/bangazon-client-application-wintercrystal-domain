@@ -69,8 +69,7 @@ const ProductDetail = props => {
                     },
                     body: JSON.stringify({
                         created_date: datestring,
-                        customer_id: parseInt(localStorage.getItem("id"), 10),
-                        payment_id: null
+                        customer_id: parseInt(localStorage.getItem("id"), 10)
                     })
                 })
                 .then(response => response.json())
@@ -95,37 +94,21 @@ const ProductDetail = props => {
             // relation
             else {
                 // If an order product relation does not exist, make one
-                if (orderProduct.length === 0)
-                {
-                    fetch(`http://localhost:8000/orderproducts`, {
-                        "method": "POST",
-                        "headers": {
-                            "Content-Type": "application/json",
-                            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                        },
-                        body: JSON.stringify({
-                            order: order.id,
-                            product: props.product.id,
-                            quantity: 1
-                        })
+                fetch(`http://localhost:8000/orderproducts`, {
+                    "method": "POST",
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                    },
+                    body: JSON.stringify({
+                        order: order.id,
+                        product: props.product.id,
+                        quantity: 1
+                    })
 
-                    })
-                    .then(response => response.json())
-                    .then(getOrders)
-                }
-                // If an order product relation does exist update the quantity on click of add to order
-                else {
-                    fetch(`http://localhost:8000/orderproducts/${orderProduct[0].id}`, {
-                        "method": "PUT",
-                        "headers": {
-                            "Content-Type": "application/json",
-                            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                        },
-                        body: JSON.stringify({
-                            quantity: (orderProduct[0].quantity += 1)
-                        })
-                    })
-                }
+                })
+                .then(response => response.json())
+                .then(getOrders)
             }
         }
     }
