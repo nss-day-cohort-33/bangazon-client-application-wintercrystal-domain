@@ -15,6 +15,7 @@ const OrderDetail = props => {
                 "headers": {
                   "Accept": "application/json",
                   "Content-Type": "application/json",
+                  "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                 }
             })
                 .then(response => response.json())
@@ -29,6 +30,8 @@ const OrderDetail = props => {
     let productQuantities = {}
     let total = 0
 
+
+    console.log(orderProducts)
     orderProducts.map(orderProduct => {
         // const pathArray = orderProduct.product.url.split('/');
         // const productId = pathArray[4]
