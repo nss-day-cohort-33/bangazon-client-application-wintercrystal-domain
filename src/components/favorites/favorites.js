@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
-// import { Link } from "react-router-dom";
 
 const Favorites = props => {
 
@@ -20,6 +19,7 @@ const Favorites = props => {
       })
         .then(response => response.json())
         .then(favorites => {
+          console.log(favorites)
           const favorite = favorites.find(favorite => {
             return favorite.id === parseInt(localStorage.getItem("id"))
           });
@@ -44,4 +44,4 @@ const Favorites = props => {
  }
 
 
-export default Favorites
+export default withRouter(Favorites)
