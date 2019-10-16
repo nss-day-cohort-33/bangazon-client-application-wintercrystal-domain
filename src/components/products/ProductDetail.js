@@ -41,7 +41,7 @@ const ProductDetail = props => {
     // First we get the open orders and then call getOrderProducts
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=1`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}`, {
                 "method": "GET",
                 "headers": {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
@@ -125,12 +125,7 @@ const ProductDetail = props => {
                     <h4>Quantity: {props.product.quantity}<font size="1"> available</font></h4>
                     {
                       isAuthenticated() ?
-                      <button onClick={() => {
-                        // counter += 1
-                        // if (counter < props.product.quantity) {
-                          addOrder()
-                        // }
-                      }}>Add To Order</button>
+                      <button onClick={addOrder}>Add To Order</button>
                       :
                       <Link className="nav-link" to="/login">
                       Sign in, to make an order!

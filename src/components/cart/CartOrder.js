@@ -34,7 +34,7 @@ const CartOrder = (props) => {
 
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=1`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=0`, {
                 "method": "GET",
                 "headers": {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
