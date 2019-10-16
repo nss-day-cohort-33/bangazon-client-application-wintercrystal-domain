@@ -48,7 +48,7 @@ const ApplicationViews = () => {
                 "headers": {
                   "Accept": "application/json",
                   "Content-Type": "application/json",
-                  "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                //   "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                 }
             })
                 .then(response => response.json())
@@ -102,7 +102,7 @@ const ApplicationViews = () => {
             <Route exact path="/products/:productId(\d+)" render={(props) => {
                 let product = products.find(product => product.id === +props.match.params.productId)
                 if (product) {
-                    return <ProductDetail {...props} product={product} />
+                    return <ProductDetail getProducts={getProducts} {...props} product={product} />
                 }
                 }}
             />
