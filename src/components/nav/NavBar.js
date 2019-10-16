@@ -30,6 +30,9 @@ const NavBar = props => {
                             <Link className="nav-link" to="/profile">My Settings</Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link" to="/favorites">Favorites</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link className="nav-link" to="/cart">Cart</Link>
                         </li>
                         <li className="nav-item">

@@ -10,7 +10,6 @@ const ProfileEditForm = props => {
   const phone_number = useRef()
   const address = useRef()
   const { isAuthenticated } = useSimpleAuth()
-  const [currentProfile, setCurrentProfile] = useState({})
 
 // PUT request updates last name, phone number, and address
 
@@ -21,11 +20,6 @@ const ProfileEditForm = props => {
   },[])
 
   const updateProfile = () => {
-    // const updatedProfile = {
-    //   phone_number: '',
-    //   address: '',
-    //   user: localStorage.getItem( "id" )
-    // }
       if (isAuthenticated()) {
           fetch(`http://localhost:8000/customers/${props.history.location.state.id}`, {
               "method": "PUT",
@@ -59,8 +53,6 @@ const ProfileEditForm = props => {
           <input type="text"
           ref={last_name}
           name="last_name"
-          // value ={updatedProfile.user.last_name}
-          // onChange = {setCurrentProfile}
           required></input>
         </fieldset>
         <fieldset>
@@ -68,8 +60,6 @@ const ProfileEditForm = props => {
           <input type="text"
           ref={phone_number}
           name="phone_number"
-          // value ={updatedProfile.phone_number}
-          // onChange = {setCurrentProfile}
           required></input>
         </fieldset>
         <fieldset>
@@ -78,14 +68,9 @@ const ProfileEditForm = props => {
           type="text"
           ref={address}
           name="address"
-          // value ={updatedProfile.address}
-          // onChange = {setCurrentProfile}
           required></input>
         </fieldset>
         <button type="submit">Update Profile</button>
-        {/* <button onClick={() => {
-            setCurrentProfile()
-        }}>Edit Me</button> */}
       </form>
     </>
   )

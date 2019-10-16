@@ -15,6 +15,7 @@ import CardOrder from "./cart/CartOrder"
 import MyProfile from "./profile/MyProfile"
 import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
+import Favorites from "./favorites/favorites"
 
 
 
@@ -179,6 +180,14 @@ const ApplicationViews = () => {
                 exact path="/profile/update" render={props => {
                     if(isAuthenticated()) return (
                         <MyProfileEditForm {...props} />
+                    )
+                    else return <Redirect to="/login"/>
+                }}
+            />
+            <Route
+                exact path="/favorites" render={props => {
+                    if(isAuthenticated()) return (
+                        <Favorites {...props} />
                     )
                     else return <Redirect to="/login"/>
                 }}

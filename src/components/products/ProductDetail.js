@@ -51,8 +51,31 @@ const ProductDetail = props => {
         }
     }
 
+
     // On mount get some orders
     useEffect(getOrders, [])
+
+    const addToFavorites = () => {
+        fetch('http://localhost:8000/products', {
+            "method": "POST",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+            },
+            "body": JSON.stringify({
+                // "ride_id": props.ride.id,
+                "first_name": props.product.customer.user.first_name,
+                "last_name": props.product.customer.user.last_name
+
+            })
+        })
+            .then(response => response.json())
+            .then(() => {
+                console.log("Added")
+                props.history.push("/favorites")
+            })
+    }
 
     // Will post orders and order products on click of the add to order button
     const addOrder = () => {
@@ -135,7 +158,12 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
+                    <div className = "col">
+                    <div className = "row">
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
+                    <button onClick= {addToFavorites}>Add To Favorites</button>
+                    </div>
+                    </div>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
                     <h4>Quantity: {props.product.quantity}<font size="1"> available</font></h4>
