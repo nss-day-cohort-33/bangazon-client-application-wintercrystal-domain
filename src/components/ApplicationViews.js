@@ -17,6 +17,7 @@ import OrderHistory from "./profile/OrderHistory"
 import OrderDetail from "./profile/OrderDetail"
 import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
+import CompleteOrder from "./cart/CompleteOrder"
 import IncompleteOrders from "./reports/IncompleteOrders"
 import Reports from "./reports/Reports"
 
@@ -197,6 +198,16 @@ const ApplicationViews = () => {
                     }
                 }}
             />
+
+            <Route
+                exact path="/cart/addPayment" render={props => {
+                    if(isAuthenticated()) return (
+                       <CompleteOrder {...props}  />
+                    )
+                    else return <Redirect to="/login" />
+                }}
+            />
+
             <Route
                 exact path="/profile/update" render={props => {
                     if(isAuthenticated()) return (
