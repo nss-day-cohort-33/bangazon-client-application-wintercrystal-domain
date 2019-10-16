@@ -17,6 +17,8 @@ import OrderHistory from "./profile/OrderHistory"
 import OrderDetail from "./profile/OrderDetail"
 import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
+import IncompleteOrders from "./reports/IncompleteOrders"
+import Reports from "./reports/Reports"
 
 
 
@@ -208,6 +210,22 @@ const ApplicationViews = () => {
                 exact path="/orderhistory" render={props => {
                     return (
                         <OrderHistory {...props} />
+                    )
+                }}
+            />
+
+            <Route
+                exact path="/reports" render={props => {
+                    return (
+                        <Reports {...props} />
+                    )
+                }}
+            />
+
+            <Route
+                exact path="/incomplete-orders" render={props => {
+                    return (
+                        <IncompleteOrders {...props} />
                     )
                 }}
             />
