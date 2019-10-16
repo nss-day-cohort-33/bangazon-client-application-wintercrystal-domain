@@ -34,8 +34,8 @@ const HomePage = props => {
               })
               .then(response => response.json())
               .then((response) => {
+                  setProducts(response)
                   setCity(undefined)
-                  setProducts(response.reverse())
                 })
 
       }

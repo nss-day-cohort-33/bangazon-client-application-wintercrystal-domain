@@ -15,6 +15,7 @@ import CardOrder from "./cart/CartOrder"
 import MyProfile from "./profile/MyProfile"
 import OrderHistory from "./profile/OrderHistory"
 import OrderDetail from "./profile/OrderDetail"
+import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
 
 
@@ -119,6 +120,15 @@ const ApplicationViews = () => {
                 exact path="/profile" render={props => {
                     if(isAuthenticated()) return (
                        <MyProfile  />
+                    )
+                    else return <Redirect to="/login" />
+                }}
+            />
+
+            <Route
+                exact path="/myProducts" render={props => {
+                    if(isAuthenticated()) return (
+                       <MyProducts {...props}  />
                     )
                     else return <Redirect to="/login" />
                 }}
