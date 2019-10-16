@@ -25,12 +25,10 @@ const MyProducts = props => {
               .then(setMyProducts)
 
       }
-
     useEffect(getMyProducts, [])
-
     return(
         <>
-          <h1>My Products</h1>
+          <h1>My Products{myProducts ? `(${myProducts.length})` : ""}</h1>
 
           {isAuthenticated() ?
 
