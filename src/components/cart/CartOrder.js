@@ -87,7 +87,6 @@ const CartOrder = (props) => {
     orderProducts.map(orderProduct => {
         // const pathArray = orderProduct.product.url.split('/');
         // const productId = pathArray[4]
-        console.log("EEEEEEEEEEEE", orderProduct)
         if (productQuantities[orderProduct.product.name]) {
             productQuantities[orderProduct.product.name][0]++
         }

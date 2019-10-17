@@ -31,7 +31,6 @@ const OrderDetail = props => {
     let total = 0
 
 
-    console.log(orderProducts)
     orderProducts.map(orderProduct => {
         // const pathArray = orderProduct.product.url.split('/');
         // const productId = pathArray[4]
@@ -39,7 +38,7 @@ const OrderDetail = props => {
             productQuantities[orderProduct.product.name][0]++
         }
         else {
-            productQuantities[orderProduct.product.name] = [1, orderProduct.product.price]
+            productQuantities[orderProduct.product.name] = [1, orderProduct.product.price, orderProduct.id]
         }
     })
 
@@ -57,7 +56,7 @@ const OrderDetail = props => {
                     <ul>
                     {
                         Object.keys(productQuantities).map(function(key) {
-                            return (<li>{key} (Quantity: {productQuantities[key][0]})</li>)
+                            return (<li key={productQuantities[key][2]}>{key} (Quantity: {productQuantities[key][0]})</li>)
                         })
                     }
                     </ul>

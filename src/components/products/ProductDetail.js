@@ -12,6 +12,7 @@ const ProductDetail = props => {
     // Order Product will contain an order product relation row if it exists
     const [orderProduct, setOrderProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
+    const [count_cart, setCount_Cart] = useState(0)
 
     // For the created date field in order
     let datestring = new Date().toISOString().slice(0,10)
@@ -47,7 +48,9 @@ const ProductDetail = props => {
                 }
             })
             .then(response => response.json())
-            .then(data => getOrderProducts(data))
+            .then(data => {
+              getOrderProducts(data)
+            })
         }
     }
 
@@ -118,13 +121,23 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
+                    <button onClick={() => {console.log(`recommend friend${props.product.name}`)}}>Recommend To A Friend</button>
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
                     <h4>Quantity: {props.product.quantity}<font size="1"> available</font></h4>
                     {
                       isAuthenticated() ?
-                      <button onClick={addOrder}>Add To Order</button>
+                      count_cart < props.product.quantity ?
+                      <button onClick={() => {
+
+                        if (count_cart < props.product.quantity) {
+                          addOrder()
+                          setCount_Cart(count_cart+1)
+                        }
+                        console.log(count_cart)
+                      }}>Add To Order</button>
+                      : ""
                       :
                       <Link className="nav-link" to="/login">
                       Sign in, to make an order!
