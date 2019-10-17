@@ -89,11 +89,6 @@ const CompleteOrder = props => {
                 </select>
                 <button type="submit">Add Payment Type</button>
                 </form>
-                {/* {
-                  paymentTypes.map(paymentType=>
-                      paymentType.id === payment.current.value ? <p>Current Payment Type: {`${payment.merchant_name}: ${paymentType.expiration_date.slice(0,7).split("-").reverse().join("/")}`}</p> : ""
-                  )
-                } */}
               </>
               :
               <>
