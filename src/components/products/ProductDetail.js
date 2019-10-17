@@ -12,7 +12,7 @@ const ProductDetail = props => {
     // Order will contain open orders for this user (i.e ones with payment type of null)
     const [order, setOrder] = useState([])
     // Order Product will contain an order product relation row if it exists
-    const [orderProduct, setOrderProducts] = useState([])
+    const [orderProduct, setOrderProduct] = useState([])
     const [productQuantity, setProductQuantity] = useState(props.product.quantity)
     const { isAuthenticated } = useSimpleAuth()
     const [count_cart, setCount_Cart] = useState(0)
@@ -51,7 +51,10 @@ const ProductDetail = props => {
                     }
                 })
                 .then(response => response.json())
-                .then(setOrderProducts)
+                .then(data => {
+                  setOrderProduct(data)
+                  setCount_Cart(data.length)
+                })
             }
             else {
                 setOrder(data)
@@ -207,12 +210,10 @@ const ProductDetail = props => {
                       isAuthenticated() ?
                       count_cart < props.product.quantity ?
                       <button onClick={() => {
-
                         if (count_cart < props.product.quantity) {
                           addOrder()
                           setCount_Cart(count_cart+1)
                         }
-                        console.log(count_cart)
                       }}>Add To Order</button>
                       : ""
                       :
