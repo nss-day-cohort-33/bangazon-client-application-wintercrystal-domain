@@ -24,6 +24,7 @@ const MyProducts = props => {
               .then(response => response.json())
               .then(setMyProducts)
 
+
       }
     useEffect(getMyProducts, [])
     return(
