@@ -91,7 +91,8 @@ const ProductDetail = props => {
 
 
     const addToFavorites = () => {
-        console.log(props.product.customer.url.substring(32,33))
+        // console.log(props.product.customer.url.substring(32,33))
+        console.log(props.product.customer.user.id)
         fetch('http://localhost:8000/favorites', {
             "method": "POST",
             "headers": {
@@ -100,8 +101,8 @@ const ProductDetail = props => {
                 "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
             },
             "body": JSON.stringify({
-                "seller_id": props.product.customer.url.substring(32,33)
-
+                // "seller_id": props.product.customer.url.substring(32,33)
+                "seller_id": props.product.customer.user.id
             })
         })
             .then(response => response.json())
