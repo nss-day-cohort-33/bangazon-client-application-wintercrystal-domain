@@ -10,7 +10,6 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 const CompleteOrder = props => {
     const [paymentTypes, setPaymentTypes] = useState([])
     const [order, setOrder] = useState([])
-    const [orderProducts, setOrderProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
     const payment = useRef()
 
@@ -55,7 +54,10 @@ const CompleteOrder = props => {
               "payment_type": +payment.current.value
           })
         })
-        .then(() => props.getCompleteOrders())
+        .then(() => {
+          props.getProducts()
+          props.getCompleteOrders()
+        })
         .then(() => {
           props.history.push("/orderhistory")
         })
