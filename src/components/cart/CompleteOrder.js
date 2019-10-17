@@ -55,12 +55,12 @@ const CompleteOrder = props => {
               "payment_type": +payment.current.value
           })
         })
-            .then(() => {
-              props.history.push("/orderhistory")
-            })
-
-          }
-        }
+        .then(() => props.getCompleteOrders())
+        .then(() => {
+          props.history.push("/orderhistory")
+        })
+      }
+    }
 
 
     useEffect(() => {

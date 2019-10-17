@@ -8,37 +8,37 @@ import { Link } from 'react-router-dom'
 //Methods: Fetch get
 
 const OrderHistory = props => {
-    // Order will contain completed orders for this user
-    const [orders, setOrders] = useState([])
-    const { isAuthenticated } = useSimpleAuth()
+    // // Order will contain completed orders for this user
+    // const [orders, setOrders] = useState([])
+    // const { isAuthenticated } = useSimpleAuth()
 
 
-    // First we get the open orders and then call getOrderProducts
-    const getOrders = () => {
-        if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=1`, {
-                "method": "GET",
-                "headers": {
-                  "Accept": "application/json",
-                  "Content-Type": "application/json",
-                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                }
-            })
-            .then(response => response.json())
-            .then(setOrders)
-        }
-    }
+    // // First we get the open orders and then call getOrderProducts
+    // const getOrders = () => {
+    //     if (isAuthenticated()) {
+    //         fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=1`, {
+    //             "method": "GET",
+    //             "headers": {
+    //               "Accept": "application/json",
+    //               "Content-Type": "application/json",
+    //                 "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+    //             }
+    //         })
+    //         .then(response => response.json())
+    //         .then(setOrders)
+    //     }
+    // }
 
-    // On mount get some orders
-    useEffect(getOrders, [])
+    // // On mount get some orders
+    // useEffect(getOrders, [])
 
   // This is returning a product card with a terinary statement that is checking the value of showCategory that is being passed down to this component. If showCategory is true than a link to the products category is shown, if it is not than nothing is show for the category.
-
+    console.log("IN ORDER HISTORY,", props.completeOrders)
     return (
         <>
             <h1>Completed Orders:</h1>
             {
-                orders.map(order =>
+                props.completeOrders.map(order =>
                 {
                     return (<OrderList key={order.id} {...props} order={order}></OrderList>)
                 })
