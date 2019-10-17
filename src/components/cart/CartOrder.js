@@ -9,7 +9,6 @@ import { CLIENT_RENEG_LIMIT } from "tls"
 //Methods: getOrder and getOrderProduct is Daniel K.'s code. the delete methods are created by me.
 
 const CartOrder = (props) => {
-
     const [order, setOrder] = useState([])
     const [orderProducts, setOrderProducts] = useState([])
     const { isAuthenticated } = useSimpleAuth()
@@ -34,7 +33,7 @@ const CartOrder = (props) => {
 
     const getOrders = () => {
         if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}`, {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=0`, {
                 "method": "GET",
                 "headers": {
                     "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
@@ -80,30 +79,60 @@ const CartOrder = (props) => {
     }
 
     useEffect(getOrders, [])
+
+    let productQuantities = {}
+    let total = 0
+
+
+    orderProducts.map(orderProduct => {
+        // const pathArray = orderProduct.product.url.split('/');
+        // const productId = pathArray[4]
+        console.log("EEEEEEEEEEEE", orderProduct)
+        if (productQuantities[orderProduct.product.name]) {
+            productQuantities[orderProduct.product.name][0]++
+        }
+        else {
+            productQuantities[orderProduct.product.name] = [1, orderProduct.product.price, orderProduct.id, orderProduct.product.id]
+        }
+    })
+
+    Object.keys(productQuantities).map(function(key) {
+        total += (productQuantities[key][0] * productQuantities[key][1])
+    })
+
     return (
         <>
         {orderProducts.length > 0 ?
         <>
-          <button onClick={deleteCart}>Delete Order</button>
           <h2>Items in your cart:</h2>
+          <div className="orderBtn-Div">
+            <button onClick={() => {
+              props.history.push("/cart/addPayment")
+            }}>
+            Complete Order
+            </button>
+            <button onClick={deleteCart}
+            >
+            Delete Order
+            </button>
+          </div>
         <section className="cartProducts">
             {/* ternary statement to load the rest of the code after the page has been mounted */}
-            {order ?
-            orderProducts.map(orderProduct => {
-                console.log(orderProduct)
-                return (
-                    <div key={orderProduct.id}>
-                    <ProductCart key={orderProduct.id} quantity={orderProduct.quantity} productId={orderProduct.product.id} />
-                    <button onClick={() => {
-                        deleteOrderProduct(orderProduct.id)
-                        getOrders()
-                        }} >delete</button>
-                    </div>
+            {
+                order ?
+                Object.keys(productQuantities).map(function(key) {
+                    return (
+                        <div key={productQuantities[key][2]}>
+                        <ProductCart key={productQuantities[key][2]} productId={productQuantities[key][3]} quantity={productQuantities[key][0]}/>
+                        <button onClick={() => {
+                            deleteOrderProduct(productQuantities[key][2])
+                            getOrders()
+                            }} >delete</button>
+                        </div>
                     )
-            })
-         :
-         ""
-        }
+                })
+                : ""
+            }
         </section>
         </>
           :
@@ -118,7 +147,20 @@ const CartOrder = (props) => {
 
         </>
     )
-
 }
 
 export default CartOrder
+
+
+// orderProducts.map(orderProduct => {
+//     console.log(orderProduct)
+//     return (
+        // <div key={orderProduct.id}>
+        // <ProductCart key={orderProduct.id} productId={orderProduct.product.id} orderProducts={orderProducts} />
+        // <button onClick={() => {
+        //     deleteOrderProduct(orderProduct.id)
+        //     getOrders()
+        //     }} >delete</button>
+        // </div>
+//         )
+// })
