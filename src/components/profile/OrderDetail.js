@@ -34,8 +34,7 @@ const OrderDetail = props => {
 
     console.log(orderProducts)
     orderProducts.map(orderProduct => {
-        // const pathArray = orderProduct.product.url.split('/');
-        // const productId = pathArray[4]
+
         if (productQuantities[orderProduct.product.name]) {
             productQuantities[orderProduct.product.name][0]++
         }
