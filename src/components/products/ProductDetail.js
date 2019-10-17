@@ -15,16 +15,13 @@ const ProductDetail = props => {
     const [orderProduct, setOrderProducts] = useState([])
     const [productQuantity, setProductQuantity] = useState(props.product.quantity)
     const { isAuthenticated } = useSimpleAuth()
-<<<<<<< HEAD
     const [count_cart, setCount_Cart] = useState(0)
-=======
     let dialog = document.querySelector("#dialog--time")
     const [isOpen, setIsOpen] = useState(false)
     const quantity = useRef()
 
 
 
->>>>>>> master
 
     // For the created date field in order
     let datestring = new Date().toISOString().slice(0,10)
