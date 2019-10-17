@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import { Link } from 'react-router-dom'
+import "./ProductDetail.css"
+
 
 
 //Author: Daniel Krusch
@@ -11,11 +13,32 @@ const ProductDetail = props => {
     const [order, setOrder] = useState([])
     // Order Product will contain an order product relation row if it exists
     const [orderProduct, setOrderProducts] = useState([])
+    const [productQuantity, setProductQuantity] = useState(props.product.quantity)
     const { isAuthenticated } = useSimpleAuth()
+<<<<<<< HEAD
     const [count_cart, setCount_Cart] = useState(0)
+=======
+    let dialog = document.querySelector("#dialog--time")
+    const [isOpen, setIsOpen] = useState(false)
+    const quantity = useRef()
+
+
+
+>>>>>>> master
 
     // For the created date field in order
     let datestring = new Date().toISOString().slice(0,10)
+
+    //toggles modal for adding inventory to product using local state variables
+    const toggleDialog = () => {
+        setIsOpen(!isOpen)
+        if (isOpen) {
+            dialog.removeAttribute("open")
+            window.removeEventListener("keyup", handler)
+        } else {
+            dialog.setAttribute("open", true)
+        }
+    }
 
     // Follows getOrders, will set a new order
     const getOrderProducts = (data) => {
@@ -40,6 +63,7 @@ const ProductDetail = props => {
 
     // First we get the open orders and then call getOrderProducts
     const getOrders = () => {
+
         if (isAuthenticated()) {
             fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=0`, {
                 "method": "GET",
@@ -54,8 +78,19 @@ const ProductDetail = props => {
         }
     }
 
+    const handler = e => {
+    // Close all dialogs when ESC is pressed, and close search field
+    if (e.keyCode === 27) {
+        if (isOpen) {
+            toggleDialog()
+        }
+        }
+}
+
+
     // On mount get some orders
-    useEffect(getOrders, [])
+    useEffect( getOrders, [])
+
 
     // Will post orders and order products on click of the add to order button
     const addOrder = () => {
@@ -116,8 +151,50 @@ const ProductDetail = props => {
         }
     }
 
+    //Conditionally renders update product button if product belongs to user and has inventory of 0
+    const renderUpdateBtn = () => {
+        if ((+props.product.customer.url.slice(-1) === +localStorage.getItem("id")) && (productQuantity === 0)) {
+            window.addEventListener("keyup", handler)
+            return <button className="item" id="update-btn" onClick={toggleDialog}>Update</button>
+    }
+}
+    //updates quantity of a product, closes modal and fetches
+    const updateProductQuantity = (e) => {
+        if (isAuthenticated() && quantity.current.value > 0 && quantity.current.value % 1 === 0) {
+            fetch(`http://localhost:8000/products/${props.product.id}`, {
+                "method": "PUT",
+                "headers": {
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
+                  "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                },
+                "body": JSON.stringify({
+                  "quantity": quantity.current.value
+            })
+
+        })
+        .then(() => {
+            dialog.removeAttribute("open")
+            setProductQuantity(quantity.current.value)
+            })
+
+
+    }
+    else {
+        e.preventDefault()
+        window.alert("Please add a quantity that is greater than 0")
+    }
+    }
     return (
         <>
+            <dialog id="dialog--time" className="dialog--time" onKeyUp={(event) => {handler(event)}}>
+                <label htmlFor="starttime">How Many Items Would You Like to Add to the Product Inventory?</label>
+                <input  type="text" ref={quantity} name="quantity" autoFocus required />
+
+                <button className="item"
+                onClick = {updateProductQuantity}>Update Inventory</button>
+
+            </dialog>
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
@@ -125,7 +202,10 @@ const ProductDetail = props => {
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
-                    <h4>Quantity: {props.product.quantity}<font size="1"> available</font></h4>
+                    <div id="product-quantity">
+                    <h4>Quantity: {productQuantity}<font size="1"> available</font></h4>
+                    {renderUpdateBtn()}
+                    </div>
                     {
                       isAuthenticated() ?
                       count_cart < props.product.quantity ?
