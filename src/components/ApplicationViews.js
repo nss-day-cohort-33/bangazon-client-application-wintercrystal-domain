@@ -18,6 +18,7 @@ import OrderDetail from "./profile/OrderDetail"
 import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
 import Favorites from "./favorites/favorites"
+import CompleteOrder from "./cart/CompleteOrder"
 import IncompleteOrders from "./reports/IncompleteOrders"
 import Reports from "./reports/Reports"
 
@@ -103,10 +104,17 @@ const ApplicationViews = () => {
             {/* Gets the id from the end of the path and finds that specific product from the state we set
                 Then passes that product object into the product detail component */}
             <Route exact path="/products/:productId(\d+)" render={(props) => {
+                if (isAuthenticated()) {
                 let product = products.find(product => product.id === +props.match.params.productId)
+
                 if (product) {
-                    return <ProductDetail {...props} product={product} />
+                    return <ProductDetail getProducts={getProducts} {...props} product={product} />
                 }
+                else {
+                    product = {id:404, name:"Product Not Found." }
+                    }
+                }
+                else return <Redirect to="/login" />
                 }}
             />
 
@@ -198,6 +206,16 @@ const ApplicationViews = () => {
                     }
                 }}
             />
+
+            <Route
+                exact path="/cart/addPayment" render={props => {
+                    if(isAuthenticated()) return (
+                       <CompleteOrder {...props}  />
+                    )
+                    else return <Redirect to="/login" />
+                }}
+            />
+
             <Route
                 exact path="/profile/update" render={props => {
                     if(isAuthenticated()) return (

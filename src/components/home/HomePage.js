@@ -30,6 +30,8 @@ const HomePage = props => {
                   "headers": {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
+
+
                   }
               })
               .then(response => response.json())
@@ -53,7 +55,7 @@ const HomePage = props => {
       .then(response => response.json())
       .then((response) => {
         setCity(query)
-        setProducts(response.reverse())
+        setProducts(response)
       })
       .then(dynamicHeader())
     }

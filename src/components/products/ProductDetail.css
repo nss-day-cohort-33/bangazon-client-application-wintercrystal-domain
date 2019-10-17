@@ -1,0 +1,46 @@
+/* Author: Dustin Hobson
+Purpose: Styling of ProductDetail page....mainly so a hyperlink looks like a button for a difficult product owner
+ */
+
+
+
+/* .button {
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 10px 6px 6px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+  } */
+
+
+#update-btn {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
+#product-quantity{
+  display: flex;
+
+}
+.item {
+  margin-left: 20px;
+}
+
+.dialog--time{
+  width: 35%;
+  position: absolute;
+  left: -10%;
+  top: 20%;
+
+  /* Full height */
+}
