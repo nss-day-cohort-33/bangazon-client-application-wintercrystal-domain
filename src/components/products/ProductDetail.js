@@ -176,7 +176,9 @@ const ProductDetail = props => {
         .then(() => {
             setProductQuantity(quantity.current.value)
             dialog.removeAttribute("open")
+            props.getProducts()
             })
+
 
 
     }
