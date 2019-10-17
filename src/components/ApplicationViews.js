@@ -228,7 +228,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/cart/addPayment" render={props => {
                     if(isAuthenticated()) return (
-                       <CompleteOrder {...props} getCompleteOrders={() => getCompleteOrders()} />
+                       <CompleteOrder {...props} getCompleteOrders={ getCompleteOrders} getProducts={getProducts} />
                     )
                     else return <Redirect to="/login" />
                 }}
