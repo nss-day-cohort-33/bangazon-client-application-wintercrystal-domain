@@ -7,6 +7,9 @@ const Favorites = props => {
   const [favorite, setFavorite] = useState([]);
   const { isAuthenticated } = useSimpleAuth();
 
+
+
+
   const getFavorites = () => {
     if (isAuthenticated()) {
       fetch(`http://localhost:8000/favorites`, {
@@ -19,7 +22,7 @@ const Favorites = props => {
       })
         .then(response => response.json())
         .then(favorites => {
-          console.log(favorites[0].seller.user.first_name)
+          console.log(favorites[0].seller.id)
           // console.log(favorites[0].customer.url.substring(32,33))
           // console.log(favorites[0].seller.url.substring(32,33))
           const favorite = favorites.find(favorite => {

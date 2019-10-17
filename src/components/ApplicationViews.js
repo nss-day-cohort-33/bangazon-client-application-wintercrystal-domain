@@ -32,6 +32,7 @@ const ApplicationViews = () => {
     const [completeOrders, setCompleteOrders] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
+
     // Fetch from database then set state with products
     const getProducts = () => {
             fetch(`http://localhost:8000/products`, {
