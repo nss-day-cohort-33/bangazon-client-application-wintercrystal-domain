@@ -20,6 +20,7 @@ const Favorites = props => {
         .then(response => response.json())
         .then(favorites => {
           console.log(favorites[0].customer.url.substring(32,33))
+          console.log(favorites[0].seller.url.substring(32,33))
           const favorite = favorites.find(favorite => {
             return favorite.id === parseInt(localStorage.getItem("id"))
           });
