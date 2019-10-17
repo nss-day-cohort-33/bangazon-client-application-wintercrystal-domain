@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 
-const Favorites = props => {
+const Favorites = () => {
 
-  const [favorite, setFavorite] = useState([]);
+  const [favorites, setFavorite] = useState([]);
   const { isAuthenticated } = useSimpleAuth();
 
 
@@ -22,32 +22,36 @@ const Favorites = props => {
       })
         .then(response => response.json())
         .then(favorites => {
-          console.log(favorites[0].seller.id)
-          // console.log(favorites[0].customer.url.substring(32,33))
-          // console.log(favorites[0].seller.url.substring(32,33))
-          const favorite = favorites.find(favorite => {
-            return favorite.id === parseInt(localStorage.getItem("id"))
-          });
-          setFavorite(favorite);
+          console.log(favorites)
+          setFavorite(favorites);
+        });
         }
-        );
+        // );
     }
-  };
+  // };
 
   useEffect(() => {
     // console.log(getFavorites(favorite))
     getFavorites()
   }, []);
- return (
+
+return (
   <>
-  <main className="explorer">
-    <div>
-         {favorite}
-       </div>
-        </main>
-      </>
-  )
- }
+  <div>hi</div>
+          <div className="Favorites">
+          {
+              favorites.map((favorite) => {
+                  return ("seller" in favorite && favorite.seller !== null) ? <div>
+                      {favorite.seller.user.first_name}
+                  </div>
+                  :
+                  ""
+              })
+          }
+          </div>
+  </>
+)
+}
 
 
 export default withRouter(Favorites)
