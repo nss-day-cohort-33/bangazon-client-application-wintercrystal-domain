@@ -60,7 +60,8 @@ const ProductDetail = props => {
     // On mount get some orders
     useEffect(getOrders, [])
 
-    const addToFavorites = (id) => {
+    const addToFavorites = () => {
+        console.log(props.product.customer.url.substring(32,33))
         fetch('http://localhost:8000/favorites', {
             "method": "POST",
             "headers": {
@@ -69,7 +70,8 @@ const ProductDetail = props => {
                 "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
             },
             "body": JSON.stringify({
-                "seller_id": props.product.customer.user.id
+                "seller_id": props.product.customer.url.substring(32,33)
+
             })
         })
             .then(response => response.json())
