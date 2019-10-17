@@ -48,7 +48,11 @@ const Product = props => {
                 +props.product.customer.url.slice(-1) === +localStorage.getItem("id") ?
                 <>
               <p>Quantity Sold: {props.product.number_sold}</p>
-                  <button onClick={deleteProduct}>Delete Product</button>
+                  <button onClick={() => {
+                    if (window.confirm(`Are you sure you want to remove ${props.product.name}?`)) {
+                      deleteProduct()
+                    }
+                    }}>Delete Product</button>
                 </>
                 :
                 ""
