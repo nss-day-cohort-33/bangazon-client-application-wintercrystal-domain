@@ -12,9 +12,10 @@ const ProductDetail = props => {
     // Order will contain open orders for this user (i.e ones with payment type of null)
     const [order, setOrder] = useState([])
     // Order Product will contain an order product relation row if it exists
-    const [orderProduct, setOrderProducts] = useState([])
+    const [orderProduct, setOrderProduct] = useState([])
     const [productQuantity, setProductQuantity] = useState(props.product.quantity)
     const { isAuthenticated } = useSimpleAuth()
+    const [count_cart, setCount_Cart] = useState(0)
     let dialog = document.querySelector("#dialog--time")
     const [isOpen, setIsOpen] = useState(false)
     const quantity = useRef()
@@ -50,7 +51,10 @@ const ProductDetail = props => {
                     }
                 })
                 .then(response => response.json())
-                .then(setOrderProducts)
+                .then(data => {
+                  setOrderProduct(data)
+                  setCount_Cart(data.length)
+                })
             }
             else {
                 setOrder(data)
@@ -68,7 +72,9 @@ const ProductDetail = props => {
                 }
             })
             .then(response => response.json())
-            .then(data => getOrderProducts(data))
+            .then(data => {
+              getOrderProducts(data)
+            })
         }
     }
 
@@ -192,6 +198,7 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
+                    <button onClick={() => {console.log(`recommend friend${props.product.name}`)}}>Recommend To A Friend</button>
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
@@ -201,7 +208,14 @@ const ProductDetail = props => {
                     </div>
                     {
                       isAuthenticated() ?
-                      <button onClick={addOrder}>Add To Order</button>
+                      count_cart < props.product.quantity ?
+                      <button onClick={() => {
+                        if (count_cart < props.product.quantity) {
+                          addOrder()
+                          setCount_Cart(count_cart+1)
+                        }
+                      }}>Add To Order</button>
+                      : ""
                       :
                       <Link className="nav-link" to="/login">
                       Sign in, to make an order!

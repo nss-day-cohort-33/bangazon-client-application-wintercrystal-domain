@@ -85,7 +85,6 @@ const CartOrder = (props) => {
 
 
     orderProducts.map(orderProduct => {
-        console.log("EEEEEEEEEEEE", orderProduct)
         if (productQuantities[orderProduct.product.name]) {
             productQuantities[orderProduct.product.name][0]++
         }
