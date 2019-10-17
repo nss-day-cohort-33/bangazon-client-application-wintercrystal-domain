@@ -168,8 +168,8 @@ const ProductDetail = props => {
 
         })
         .then(() => {
-            dialog.removeAttribute("open")
             setProductQuantity(quantity.current.value)
+            dialog.removeAttribute("open")
             })
 
 
