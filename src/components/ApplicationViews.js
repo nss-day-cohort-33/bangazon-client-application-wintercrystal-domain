@@ -102,10 +102,17 @@ const ApplicationViews = () => {
             {/* Gets the id from the end of the path and finds that specific product from the state we set
                 Then passes that product object into the product detail component */}
             <Route exact path="/products/:productId(\d+)" render={(props) => {
+                if (isAuthenticated()) {
                 let product = products.find(product => product.id === +props.match.params.productId)
+
                 if (product) {
                     return <ProductDetail getProducts={getProducts} {...props} product={product} />
                 }
+                else {
+                    product = {id:404, name:"Product Not Found." }
+                    }
+                }
+                else return <Redirect to="/login" />
                 }}
             />
 
