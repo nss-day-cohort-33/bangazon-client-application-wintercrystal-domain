@@ -9,6 +9,7 @@ const OrderDetail = props => {
 
     // Fetch call that gets all the products within a single category. Uses a query param that passes in a category id to get specific products back and then it changes products array to hold products of that category
 
+    console.log("SNEEEEEEEEE")
     const getOrderProducts = () => {
             fetch(`http://localhost:8000/orderproducts?order_id=${props.order.id}`, {
                 "method": "GET",
@@ -32,8 +33,7 @@ const OrderDetail = props => {
 
 
     orderProducts.map(orderProduct => {
-        // const pathArray = orderProduct.product.url.split('/');
-        // const productId = pathArray[4]
+
         if (productQuantities[orderProduct.product.name]) {
             productQuantities[orderProduct.product.name][0]++
         }

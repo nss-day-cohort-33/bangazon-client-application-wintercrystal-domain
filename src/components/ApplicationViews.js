@@ -28,6 +28,7 @@ const ApplicationViews = () => {
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
     const [orders, setOrders] = useState([])
+    const [completeOrders, setCompleteOrders] = useState([])
     const { isAuthenticated } = useSimpleAuth()
 
     // Fetch from database then set state with products
@@ -72,11 +73,29 @@ const ApplicationViews = () => {
             .then(setOrders)
     }
 
+    // First we get the open orders and then call getOrderProducts
+    const getCompleteOrders = () => {
+        console.log("HENLOOOO")
+        if (isAuthenticated()) {
+            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=1`, {
+                "method": "GET",
+                "headers": {
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                }
+            })
+            .then(response => response.json())
+            .then(setCompleteOrders)
+        }
+    }
+
     // Runs both fetches in sequence when application starts
     useEffect(() => {
         getProducts()
         getCategories()
         getOrders()
+        getCompleteOrders()
     }, [])
 
     return (
@@ -209,7 +228,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/cart/addPayment" render={props => {
                     if(isAuthenticated()) return (
-                       <CompleteOrder {...props}  />
+                       <CompleteOrder {...props} getCompleteOrders={() => getCompleteOrders()} />
                     )
                     else return <Redirect to="/login" />
                 }}
@@ -227,7 +246,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/orderhistory" render={props => {
                     return (
-                        <OrderHistory {...props} />
+                        <OrderHistory {...props} completeOrders={completeOrders}/>
                     )
                 }}
             />
@@ -252,7 +271,7 @@ const ApplicationViews = () => {
                 Then passes that category object into the product category component
                 If that specific product category doesn't exist, a 404 object will be passed in */}
             <Route exact path="/orderhistory/:orderId(\d+)" render={(props) => {
-              let order = orders.find(order => order.id === +props.match.params.orderId)
+              let order = completeOrders.find(order => order.id === +props.match.params.orderId)
               if (order) {
                 return <OrderDetail {...props} order={order} />
               }
