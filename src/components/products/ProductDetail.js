@@ -77,7 +77,7 @@ const ProductDetail = props => {
     }
 
     const handler = e => {
-    // Close all dialogs when ESC is pressed, and close search field
+    // Close all dialogs when ESC is pressed
     if (e.keyCode === 27) {
         if (isOpen) {
             toggleDialog()

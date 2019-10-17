@@ -85,8 +85,6 @@ const CartOrder = (props) => {
 
 
     orderProducts.map(orderProduct => {
-        // const pathArray = orderProduct.product.url.split('/');
-        // const productId = pathArray[4]
         console.log("EEEEEEEEEEEE", orderProduct)
         if (productQuantities[orderProduct.product.name]) {
             productQuantities[orderProduct.product.name][0]++
@@ -152,15 +150,3 @@ const CartOrder = (props) => {
 export default CartOrder
 
 
-// orderProducts.map(orderProduct => {
-//     console.log(orderProduct)
-//     return (
-        // <div key={orderProduct.id}>
-        // <ProductCart key={orderProduct.id} productId={orderProduct.product.id} orderProducts={orderProducts} />
-        // <button onClick={() => {
-        //     deleteOrderProduct(orderProduct.id)
-        //     getOrders()
-        //     }} >delete</button>
-        // </div>
-//         )
-// })
