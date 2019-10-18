@@ -115,6 +115,7 @@ const ProductDetail = props => {
         window.alert("Please add a quantity that is greater than 0")
     }
     }
+    console.log(props.product.customer)
     return (
         <>
             <dialog id="dialog--time" className="dialog--time" onKeyUp={(event) => {handler(event)}}>
@@ -138,7 +139,7 @@ const ProductDetail = props => {
                     </div>
                     {
                       isAuthenticated() ?
-                      count_cart < props.product.quantity ?
+                      (count_cart < props.product.quantity) && (+props.product.customer.id !== +localStorage.getItem("id")) ?
                       <button onClick={() => {
                         if (count_cart < props.product.quantity) {
                           addOrder()
