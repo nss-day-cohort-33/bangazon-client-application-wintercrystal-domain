@@ -81,7 +81,7 @@ const ProductDetail = props => {
 
     //Conditionally renders update product button if product belongs to user and has inventory of 0
     const renderUpdateBtn = () => {
-        if ((+props.product.customer.url.slice(-1) === +localStorage.getItem("id")) && (productQuantity === 0)) {
+        if ((+props.product.customer.id === +localStorage.getItem("id")) && (productQuantity === 0)) {
             window.addEventListener("keyup", handler)
             return <button className="item" id="update-btn" onClick={toggleDialog}>Update</button>
     }
