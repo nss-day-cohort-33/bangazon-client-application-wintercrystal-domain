@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 
-const Favorites = () => {
+const Favorites = props => {
 
   const [favorites, setFavorite] = useState([]);
   const { isAuthenticated } = useSimpleAuth();
-
 
 
 
@@ -22,22 +21,17 @@ const Favorites = () => {
       })
         .then(response => response.json())
         .then(favorites => {
-          console.log(favorites)
           setFavorite(favorites);
         });
         }
-        // );
     }
-  // };
 
   useEffect(() => {
-    // console.log(getFavorites(favorite))
     getFavorites()
   }, []);
 
 return (
   <>
-  <div>hi</div>
           <div className="Favorites">
           {
               favorites.map((favorite) => {
@@ -49,6 +43,7 @@ return (
               })
           }
           </div>
+
   </>
 )
 }

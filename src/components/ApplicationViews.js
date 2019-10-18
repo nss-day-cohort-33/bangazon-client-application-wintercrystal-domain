@@ -247,7 +247,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/favorites" render={props => {
                     if(isAuthenticated()) return (
-                        <Favorites {...props} />
+                        <Favorites {...props} getProducts={getProducts}/>
                     )
                     else return <Redirect to="/login"/>
                 }}
