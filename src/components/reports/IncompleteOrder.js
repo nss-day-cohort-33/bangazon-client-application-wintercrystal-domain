@@ -28,7 +28,7 @@ const IncompleteOrder = props => {
     // First we get the open orders and then call getOrderProducts
     const getCustomers = () => {
         if (isAuthenticated()) {
-            const customerId = props.incomplete.customer.url.slice(-1)
+            const customerId = props.incomplete.customer.id
             fetch(`http://localhost:8000/customers/${customerId}`, {
                 "method": "GET",
                 "headers": {

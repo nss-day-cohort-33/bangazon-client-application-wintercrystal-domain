@@ -35,7 +35,7 @@ const Product = props => {
               {
                 props.showCategory ?
                 <>
-                <p>Category: <Link className="nav-link" to={`/productcategories/${props.product.product_category.url.slice(-1)}`}>
+                <p>Category: <Link className="nav-link" to={`/productcategories/${props.product.product_category.id}`}>
                       {props.product.product_category.name}
                   </Link></p>
                   </>
@@ -45,7 +45,7 @@ const Product = props => {
               <p className="card-text">${props.product.price.toFixed(2)}</p>
               <p className="card-text">Quantity: <b>{props.product.quantity}</b> <font size="1">available</font></p>
               {
-                +props.product.customer.url.slice(-1) === +localStorage.getItem("id") ?
+                +props.product.customer.id === +localStorage.getItem("id") ?
                 <>
               <p>Quantity Sold: {props.product.number_sold}</p>
                   <button onClick={() => {
