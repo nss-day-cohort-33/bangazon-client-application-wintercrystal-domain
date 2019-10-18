@@ -30,6 +30,7 @@ const ApplicationViews = () => {
     const [orders, setOrders] = useState([])
     const [completeOrders, setCompleteOrders] = useState([])
     const { isAuthenticated } = useSimpleAuth()
+    const [myRatings, setMyRatings] = useState([])
 
     // Fetch from database then set state with products
     const getProducts = () => {
@@ -72,7 +73,19 @@ const ApplicationViews = () => {
             .then(response => response.json())
             .then(setOrders)
     }
-
+    //function to get an authenticated user's ratings
+    const getMyRatings = () => {
+        fetch(`http://localhost:8000/ratings?customer=true`, {
+                  "method": "GET",
+                  "headers": {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                  }
+              })
+              .then(response => response.json())
+              .then(setMyRatings)
+    }
     // First we get the open orders and then call getOrderProducts
     const getCompleteOrders = () => {
         console.log("HENLOOOO")
@@ -273,7 +286,7 @@ const ApplicationViews = () => {
             <Route exact path="/orderhistory/:orderId(\d+)" render={(props) => {
               let order = completeOrders.find(order => order.id === +props.match.params.orderId)
               if (order) {
-                return <OrderDetail {...props} order={order} />
+                return <OrderDetail getMyRatings={getMyRatings} {...props} order={order} />
               }
               }}
             />

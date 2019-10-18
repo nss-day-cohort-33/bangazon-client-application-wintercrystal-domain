@@ -1,0 +1,12 @@
+#productRating{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center */
+}
+
+/* #parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+
+} */

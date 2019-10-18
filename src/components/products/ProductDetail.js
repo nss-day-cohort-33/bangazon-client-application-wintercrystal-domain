@@ -22,7 +22,6 @@ const ProductDetail = props => {
 
 
 
-
     // For the created date field in order
     let datestring = new Date().toISOString().slice(0,10)
 
