@@ -62,9 +62,6 @@ const ProductRatingInput = props => {
             setIsRated(false)
         }
 
-
-
-
     } )
 }
 

@@ -74,7 +74,7 @@ const Profile = props => {
               <h4>View Order History</h4>
             </Link>
 
-            <h3> Your seller rating for all products: {customer.avg_rating}</h3>
+            <h3> Average Product rating from Customers: {customer.avg_rating}</h3>
           </div>
         </main>
       </>
