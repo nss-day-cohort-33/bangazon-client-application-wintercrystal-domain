@@ -36,6 +36,7 @@ const Profile = props => {
     getCustomers()
   }, []);
 
+
   return (
       <>
         <main className="explorer">
@@ -72,6 +73,8 @@ const Profile = props => {
             <Link className="nav-link" to={`/orderhistory`}>
               <h4>View Order History</h4>
             </Link>
+
+            <h3> Average Product rating from Customers: {customer.avg_rating}</h3>
           </div>
         </main>
       </>

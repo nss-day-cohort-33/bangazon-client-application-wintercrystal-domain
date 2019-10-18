@@ -85,19 +85,17 @@ const CartOrder = (props) => {
 
 
     orderProducts.map(orderProduct => {
-        console.log("EEEEEEEEEEEE", orderProduct)
-        if (productQuantities[orderProduct.product.name]) {
-            productQuantities[orderProduct.product.name][0]++
+        if (productQuantities[orderProduct.product.id]) {
+            productQuantities[orderProduct.product.id][0]++
         }
         else {
-            productQuantities[orderProduct.product.name] = [1, orderProduct.product.price, orderProduct.id, orderProduct.product.id]
+            productQuantities[orderProduct.product.id] = [1, orderProduct.product.price, orderProduct.id, orderProduct.product.name]
         }
     })
 
     Object.keys(productQuantities).map(function(key) {
         total += (productQuantities[key][0] * productQuantities[key][1])
     })
-
     return (
         <>
         {orderProducts.length > 0 ?
@@ -121,7 +119,7 @@ const CartOrder = (props) => {
                 Object.keys(productQuantities).map(function(key) {
                     return (
                         <div key={productQuantities[key][2]}>
-                        <ProductCart key={productQuantities[key][2]} productId={productQuantities[key][3]} quantity={productQuantities[key][0]}/>
+                        <ProductCart key={productQuantities[key][2]} productId={key} quantity={productQuantities[key][0]}/>
                         <button onClick={() => {
                             deleteOrderProduct(productQuantities[key][2])
                             getOrders()

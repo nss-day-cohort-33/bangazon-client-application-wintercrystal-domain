@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import "./OrderDetail.css"
+import ProductRatingInput from "../products/ProductRatingInput"
 
 //Author:
 
@@ -9,7 +11,7 @@ const OrderDetail = props => {
 
     // Fetch call that gets all the products within a single category. Uses a query param that passes in a category id to get specific products back and then it changes products array to hold products of that category
 
-    console.log("SNEEEEEEEEE")
+
     const getOrderProducts = () => {
             fetch(`http://localhost:8000/orderproducts?order_id=${props.order.id}`, {
                 "method": "GET",
@@ -32,14 +34,13 @@ const OrderDetail = props => {
     let total = 0
 
 
-    console.log(orderProducts)
     orderProducts.map(orderProduct => {
 
-        if (productQuantities[orderProduct.product.name]) {
-            productQuantities[orderProduct.product.name][0]++
+        if (productQuantities[orderProduct.product.id]) {
+            productQuantities[orderProduct.product.id][0]++
         }
         else {
-            productQuantities[orderProduct.product.name] = [1, orderProduct.product.price]
+            productQuantities[orderProduct.product.id] = [1, orderProduct.product.price, orderProduct.id, orderProduct.product.name]
         }
     })
 
@@ -54,13 +55,19 @@ const OrderDetail = props => {
                     <h3>Order {props.order.id}</h3>
                     <h5>Payment Type: {props.order.payment_type.merchant_name}</h5>
                     <h4>Products:</h4>
-                    <ul>
+                    <div id="parent">
                     {
                         Object.keys(productQuantities).map(function(key) {
-                            return (<li>{key} (Quantity: {productQuantities[key][0]})</li>)
+                            return (
+                            <div key={productQuantities[key][2]} id="productRating">
+
+                                <p>{productQuantities[key][3]} (Quantity: {productQuantities[key][0]})</p>
+                                <ProductRatingInput productId={key} {...props} />
+                            </div>
+                    )
                         })
                     }
-                    </ul>
+                    </div>
                     <h3>Total: ${total.toFixed(2)}</h3>
                 </section>
             }

@@ -9,21 +9,14 @@ import "./ProductDetail.css"
 //Purpose: Shows a the details of the product the clicked on the home or product categories page
 //Methods: Will create an order or order product based on if an order exists or not for that user
 const ProductDetail = props => {
-    // Order will contain open orders for this user (i.e ones with payment type of null)
-    const [order, setOrder] = useState([])
     // Order Product will contain an order product relation row if it exists
-    const [orderProduct, setOrderProducts] = useState([])
+    const [orderProduct, setOrderProduct] = useState([])
     const [productQuantity, setProductQuantity] = useState(props.product.quantity)
     const { isAuthenticated } = useSimpleAuth()
+    const [count_cart, setCount_Cart] = useState(0)
     let dialog = document.querySelector("#dialog--time")
     const [isOpen, setIsOpen] = useState(false)
     const quantity = useRef()
-
-
-
-
-    // For the created date field in order
-    let datestring = new Date().toISOString().slice(0,10)
 
     //toggles modal for adding inventory to product using local state variables
     const toggleDialog = () => {
@@ -37,43 +30,18 @@ const ProductDetail = props => {
     }
 
     // Follows getOrders, will set a new order
-    const getOrderProducts = (data) => {
-            // If there exists an open order, then we will fetch the order_product relation for that order
-            // if there isnt an open order we'll just set the order and leave orderProduct empty
-            if (data.length !== 0)
-            {
-                setOrder(data[0])
-                fetch(`http://localhost:8000/orderproducts?product_id=${props.product.id}&order_id=${data[0].id}`, {
+    const getOrderProducts = () => {
+                fetch(`http://localhost:8000/orderproducts?product_id=${props.product.id}`, {
                     "method": "GET",
                     "headers": {
                         "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
                     }
                 })
                 .then(response => response.json())
-                .then(setOrderProducts)
-            }
-            else {
-                setOrder(data)
-            }
-    }
-
-    // First we get the open orders and then call getOrderProducts
-    const getOrders = () => {
-
-        if (isAuthenticated()) {
-            fetch(`http://localhost:8000/orders?customer_id=${localStorage.getItem("id")}&complete=0`, {
-                "method": "GET",
-                "headers": {
-                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                }
-            })
-            .then(response => response.json())
-            .then(data =>  {
-                console.log(data)
-                return getOrderProducts(data)
-            })
-
-        }
+                .then(data => {
+                  setOrderProduct(data)
+                  setCount_Cart(data.length)
+                })
     }
 
     const handler = e => {
@@ -87,7 +55,7 @@ const ProductDetail = props => {
 
 
     // On mount get some orders
-    useEffect( getOrders, [])
+    useEffect( getOrderProducts, [])
 
 
     const addToFavorites = () => {
@@ -116,58 +84,20 @@ const ProductDetail = props => {
     const addOrder = () => {
         // Checks that user is valid
         if (isAuthenticated()) {
-            // If an open order does not exist one will be created, then an order_product relation will be created
-            // with an order_id of the order just created and a product id of the current product
-            if (order.length === 0) {
-                fetch(`http://localhost:8000/orders`, {
-                    "method": "POST",
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                    },
-                    body: JSON.stringify({
-                        created_date: datestring,
-                        customer_id: parseInt(localStorage.getItem("id"), 10)
-                    })
+            fetch(`http://localhost:8000/orderproducts`, {
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+                },
+                body: JSON.stringify({
+                    product: props.product.id,
+                    quantity: 1
                 })
-                .then(response => response.json())
-                .then((data) => {
-                    fetch(`http://localhost:8000/orderproducts`, {
-                        "method": "POST",
-                        "headers": {
-                            "Content-Type": "application/json",
-                            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                        },
-                        body: JSON.stringify({
-                            order: data.id,
-                            product: props.product.id,
-                            quantity: 1
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(getOrders)
-                })
-            }
-            // If an open order already exists we don't have to create one, we can just create the order_product
-            // relation
-            else {
-                // If an order product relation does not exist, make one
-                fetch(`http://localhost:8000/orderproducts`, {
-                    "method": "POST",
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
-                    },
-                    body: JSON.stringify({
-                        order: order.id,
-                        product: props.product.id,
-                        quantity: 1
-                    })
 
-                })
-                .then(response => response.json())
-                .then(getOrders)
-            }
+            })
+            .then(response => response.json())
+            .then(getOrderProducts)
         }
     }
 
@@ -194,9 +124,11 @@ const ProductDetail = props => {
 
         })
         .then(() => {
-            dialog.removeAttribute("open")
             setProductQuantity(quantity.current.value)
+            dialog.removeAttribute("open")
+            props.getProducts()
             })
+
 
 
     }
@@ -232,7 +164,14 @@ const ProductDetail = props => {
                     </div>
                     {
                       isAuthenticated() ?
-                      <button onClick={addOrder}>Add To Order</button>
+                      count_cart < props.product.quantity ?
+                      <button onClick={() => {
+                        if (count_cart < props.product.quantity) {
+                          addOrder()
+                          setCount_Cart(count_cart+1)
+                        }
+                      }}>Add To Order</button>
+                      : ""
                       :
                       <Link className="nav-link" to="/login">
                       Sign in, to make an order!
