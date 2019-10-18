@@ -60,7 +60,6 @@ const ProductDetail = props => {
 
     const addToFavorites = () => {
         // console.log(props.product.customer.url.substring(32,33))
-        console.log(props.product.customer.user.id)
         fetch('http://localhost:8000/favorites', {
             "method": "POST",
             "headers": {
@@ -70,12 +69,14 @@ const ProductDetail = props => {
             },
             "body": JSON.stringify({
                 // "seller_id": props.product.customer.url.substring(32,33)
-                "seller_id": props.product.customer.user.id
+                "seller_id": props.product.customer.user.id,
+                "products":props.product
             })
         })
             .then(response => response.json())
             .then(() => {
                 console.log("Added")
+                props.getProducts()
                 props.history.push("/favorites")
             })
     }

@@ -10,6 +10,7 @@ const Favorites = props => {
 
 
   const getFavorites = () => {
+    console.log(props.products)
     if (isAuthenticated()) {
       fetch(`http://localhost:8000/favorites`, {
         method: "GET",
@@ -36,7 +37,9 @@ return (
           {
               favorites.map((favorite) => {
                   return ("seller" in favorite && favorite.seller !== null) ? <div>
-                      {favorite.seller.user.first_name}
+                      <p className="first_name" ><b>{favorite.seller.user.first_name}</b></p>
+                      <p className="last_name" ><b>{favorite.seller.user.last_name}</b></p>
+                      <p>{props.products}</p>
                   </div>
                   :
                   ""
