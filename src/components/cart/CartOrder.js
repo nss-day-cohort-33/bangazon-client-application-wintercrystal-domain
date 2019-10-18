@@ -119,7 +119,7 @@ const CartOrder = (props) => {
                 Object.keys(productQuantities).map(function(key) {
                     return (
                         <div key={productQuantities[key][2]}>
-                        <ProductCart key={productQuantities[key][2]} productId={[key]} quantity={productQuantities[key][0]}/>
+                        <ProductCart key={productQuantities[key][2]} productId={key} quantity={productQuantities[key][0]}/>
                         <button onClick={() => {
                             deleteOrderProduct(productQuantities[key][2])
                             getOrders()
