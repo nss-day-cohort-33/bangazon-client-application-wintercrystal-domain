@@ -14,6 +14,7 @@ const ProductDetail = props => {
     const [productQuantity, setProductQuantity] = useState(props.product.quantity)
     const { isAuthenticated } = useSimpleAuth()
     const [count_cart, setCount_Cart] = useState(0)
+    const [showInput, setShowInput] = useState(false)
     let dialog = document.querySelector("#dialog--time")
     const [isOpen, setIsOpen] = useState(false)
     const quantity = useRef()
@@ -129,7 +130,18 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
-                    <button onClick={() => {console.log(`recommend friend${props.product.name}`)}}>Recommend To A Friend</button>
+                    {
+                      !showInput ?
+                      <button onClick={() => setShowInput(true)}>Recommend To A Friend</button>
+                    :
+                      <>
+                        <input type="text" placeholder="User's Name"></input>
+                        <button onClick={() => {
+                          console.log("Recommended")
+                          setShowInput(false)
+                        }}>Choose User</button>
+                      </>
+                    }
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
