@@ -45,6 +45,7 @@ const ProductRatingInput = props => {
         .then(response => response.json())
         .then(props.getMyRatings)
         .then(getMyRatings)
+        .then(props.getProducts)
 
 
     }

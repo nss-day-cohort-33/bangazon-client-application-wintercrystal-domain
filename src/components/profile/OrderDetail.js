@@ -62,7 +62,7 @@ const OrderDetail = props => {
                             <div key={productQuantities[key][2]} id="productRating">
 
                                 <p>{productQuantities[key][3]} (Quantity: {productQuantities[key][0]})</p>
-                                <ProductRatingInput productId={key} {...props} />
+                                <ProductRatingInput getProducts={props.getProducts} productId={key} {...props} />
                             </div>
                     )
                         })

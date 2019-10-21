@@ -269,7 +269,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/orderhistory" render={props => {
                     return (
-                        <OrderHistory {...props} completeOrders={completeOrders}/>
+                        <OrderHistory getProducts = {getProducts} {...props} completeOrders={completeOrders}/>
                     )
                 }}
             />
@@ -296,7 +296,7 @@ const ApplicationViews = () => {
             <Route exact path="/orderhistory/:orderId(\d+)" render={(props) => {
               let order = completeOrders.find(order => order.id === +props.match.params.orderId)
               if (order) {
-                return <OrderDetail getMyRatings={getMyRatings} {...props} order={order} />
+                return <OrderDetail getProducts={getProducts} getMyRatings={getMyRatings} {...props} order={order} />
               }
               }}
             />
