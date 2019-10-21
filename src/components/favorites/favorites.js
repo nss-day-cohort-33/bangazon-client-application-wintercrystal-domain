@@ -39,7 +39,6 @@ return (
           {
 
               favorites.map((favorite) => {
-                console.log(favorite.id)
                   return ("seller" in favorite && favorite.seller !== null) ? <div className="card" key={favorite.id}>
                       <h2 className="first_name"><p>Seller: {favorite.seller.user.first_name} {favorite.seller.user.last_name} </p></h2>
                       {
