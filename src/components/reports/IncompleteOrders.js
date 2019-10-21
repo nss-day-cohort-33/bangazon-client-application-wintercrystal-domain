@@ -33,7 +33,7 @@ const IncompleteOrders = props => {
   // This is returning a product card with a terinary statement that is checking the value of showCategory that is being passed down to this component. If showCategory is true than a link to the products category is shown, if it is not than nothing is show for the category.
     return (
         <>
-            <h1>Crustomers With Incomplete Orders:</h1>
+            <h1>Customers With Incomplete Orders:</h1>
             {
                 incompleteOrders.map(incomplete =>
                 {
