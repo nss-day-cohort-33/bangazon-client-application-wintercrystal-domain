@@ -14,7 +14,7 @@ const ProductCategory = props => {
     // Fetch call that gets all the products within a single category. Uses a query param that passes in a category id to get specific products back and then it changes products array to hold products of that category
 
     const getProducts = () => {
-            fetch(`http://localhost:8000/products?category=${props.category.id}`, {
+            fetch(`http://localhost:8000/products?category=${props.category.id}&quantity=3`, {
                 "method": "GET",
                 "headers": {
                   "Accept": "application/json",
@@ -40,7 +40,7 @@ const ProductCategory = props => {
                 { props.showThree ?
                   <div className={`productDiv category-${props.category.id}`}>
                   {
-                    products.slice(0, 3).map(product =>
+                    products.map(product =>
                       <Product key={product.id} product={product} showCategory={false} />
                       )
                   }
