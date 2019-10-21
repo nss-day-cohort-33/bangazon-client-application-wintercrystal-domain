@@ -6,30 +6,10 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 const Favorites = props => {
 
   const [favorites, setFavorite] = useState([]);
-  const [favoriteProduct, setFavoriteProduct] = useState([])
-  // const [myProducts, setMyProducts] = useState([])
-
   const { isAuthenticated } = useSimpleAuth();
 
-  // const getFavoriteProducts = () => {
-  //   if (isAuthenticated()) {
-  //   fetch(`http://localhost:8000/favorites`, {
-  //       "method": "GET",
-  //       "headers": {
-  //         "Accept": "application/json",
-  //         "Content-Type": "application/json",
-  //       }
-  //   })
-  //       .then(response => response.json())
-  //       .then(favoriteProduct => {
-  //         console.log(favoriteProduct)
-  //         setFavoriteProduct(favoriteProduct)
-  //       })
-  //   }
-  // }
 
   const getFavorites = () => {
-    console.log(favoriteProduct)
     if (isAuthenticated()) {
       fetch(`http://localhost:8000/favorites`, {
         method: "GET",
@@ -47,10 +27,7 @@ const Favorites = props => {
     }
 
   useEffect(() => {
-    // console.log(product)
     getFavorites()
-    // getMyProducts()
-    // getProduct()
   }, []);
 
 return (
@@ -58,18 +35,20 @@ return (
 
           <div className="Favorites">
           <div className="card-body">
-          <h1>Favorites</h1>
+          <h1 className="title">Favorites</h1>
           {
 
               favorites.map((favorite) => {
-                console.log(favorite)
                   return ("seller" in favorite && favorite.seller !== null) ? <div className="card">
-                    <div className = "col">
-                      <p className="first_name" ><h2>Seller: {favorite.seller.user.first_name}</h2></p>
-                      </div>
+                      <h2 className="first_name"><p>Seller: {favorite.seller.user.first_name} {favorite.seller.user.last_name} </p></h2>
                       {
                         favorite.seller.products.map((product) => {
-                          return <li>{product.name}</li>
+                          return ( <div>
+                            <h2>Products</h2>
+                            <li>Name: {product.name}</li>
+                            <li>Price:$ {product.price}</li>
+                            <li>Description: {product.description}</li>
+                            </div>)
                         })
                       }
                   </div>
