@@ -32,6 +32,7 @@ const ApplicationViews = () => {
     const [completeOrders, setCompleteOrders] = useState([])
     const { isAuthenticated } = useSimpleAuth()
     const [myRatings, setMyRatings] = useState([])
+    const [recommendations, setRecommendations] = useState([])
 
 
     // Fetch from database then set state with products
@@ -105,12 +106,24 @@ const ApplicationViews = () => {
         }
     }
 
+    const getRecommendations = () => {
+      fetch(`http://localhost:8000/recommendations?user=true`, {
+          "method": "GET",
+          "headers": {
+              "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+          }
+      })
+      .then(response => response.json())
+      .then(setRecommendations)
+}
+
     // Runs both fetches in sequence when application starts
     useEffect(() => {
         getProducts()
         getCategories()
         getOrders()
         getCompleteOrders()
+        getRecommendations()
     }, [])
 
     return (
@@ -141,7 +154,7 @@ const ApplicationViews = () => {
                 let product = products.find(product => product.id === +props.match.params.productId)
 
                 if (product) {
-                    return <ProductDetail getProducts={getProducts} {...props} product={product} />
+                    return <ProductDetail getProducts={getProducts} {...props} product={product} getRecommendations={getRecommendations} />
                 }
                 else {
                     product = {id:404, name:"Product Not Found." }
@@ -163,7 +176,7 @@ const ApplicationViews = () => {
             <Route
                 exact path="/profile" render={props => {
                     if(isAuthenticated()) return (
-                       <MyProfile  />
+                       <MyProfile recommendations={recommendations} />
                     )
                     else return <Redirect to="/login" />
                 }}

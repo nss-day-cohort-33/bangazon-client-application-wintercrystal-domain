@@ -58,6 +58,7 @@ const Profile = props => {
                 <b>Address:</b> {customer.address}
               </p>
             </ul>
+            <p>Recommended Products ({`${props.recommendations.length}`})</p>
             <Link className="nav-link" to = {{
                 pathname: "/profile/update",
                 state: customer

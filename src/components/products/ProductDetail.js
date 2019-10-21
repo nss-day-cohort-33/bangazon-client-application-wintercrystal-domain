@@ -12,11 +12,14 @@ const ProductDetail = props => {
     // Order Product will contain an order product relation row if it exists
     const [orderProduct, setOrderProduct] = useState([])
     const [productQuantity, setProductQuantity] = useState(props.product.quantity)
+    const [searchUser, setSearchUser] = useState([])
     const { isAuthenticated } = useSimpleAuth()
     const [count_cart, setCount_Cart] = useState(0)
+    const [showInput, setShowInput] = useState(false)
     let dialog = document.querySelector("#dialog--time")
     const [isOpen, setIsOpen] = useState(false)
     const quantity = useRef()
+    const userName = useRef()
 
     //toggles modal for adding inventory to product using local state variables
     const toggleDialog = () => {
@@ -43,6 +46,17 @@ const ProductDetail = props => {
                   setCount_Cart(data.length)
                 })
     }
+
+    const getUsers = () => {
+      fetch(`http://localhost:8000/customers?name=${userName.current.value}`, {
+          "method": "GET",
+          "headers": {
+              "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+          }
+      })
+      .then(response => response.json())
+      .then(setSearchUser)
+}
 
     const handler = e => {
     // Close all dialogs when ESC is pressed
@@ -116,6 +130,23 @@ const ProductDetail = props => {
             return <button className="item" id="update-btn" onClick={toggleDialog}>Update</button>
     }
 }
+
+const createRecommendation = (id) => {
+  if (isAuthenticated()) {
+      fetch(`http://localhost:8000/recommendations`, {
+          "method": "POST",
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+          },
+          "body": JSON.stringify({
+            "product_id": props.product.id,
+            "customer_id": id
+      })
+
+
+  }).then(props.getRecommendations)}}
     //updates quantity of a product, closes modal and fetches
     const updateProductQuantity = (e) => {
         if (isAuthenticated() && quantity.current.value > 0 && quantity.current.value % 1 === 0) {
@@ -136,9 +167,6 @@ const ProductDetail = props => {
             dialog.removeAttribute("open")
             props.getProducts()
             })
-
-
-
     }
     else {
         e.preventDefault()
@@ -159,6 +187,32 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
+                    {
+                      !showInput ?
+                      <button onClick={() => setShowInput(true)}>Recommend To A Friend</button>
+                    :
+                      <>
+                        <input type="text" placeholder="User's Name" ref={userName}></input>
+                        <button onClick={() => {
+                          console.log("Recommended")
+                          setShowInput(false)
+                          getUsers()
+                        }}>Search User</button>
+                      </>
+                    }
+                    {
+                      searchUser.length > 0 ?
+                      searchUser.map(customer => {
+                        return (
+                          <>
+                          <p>{customer.full_name}</p>
+                          <button onClick={() => {
+                            createRecommendation(customer.id)
+                          }}>Select</button>
+                        </>
+                      )})
+                      : ""
+                    }
                     <div className = "col">
                     <div className = "row">
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
