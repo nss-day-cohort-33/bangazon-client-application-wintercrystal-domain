@@ -58,6 +58,29 @@ const ProductDetail = props => {
     useEffect(getOrderProducts, [])
 
 
+    const addToFavorites = () => {
+        // console.log(props.product.customer.url.substring(32,33))
+        fetch('http://localhost:8000/favorites', {
+            "method": "POST",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+            },
+            "body": JSON.stringify({
+                // "seller_id": props.product.customer.url.substring(32,33)
+                "seller_id": props.product.customer.user.id,
+                "products":props.product
+            })
+        })
+            .then(response => response.json())
+            .then(() => {
+                console.log("Added")
+                props.getProducts()
+                props.history.push("/favorites")
+            })
+    }
+
     // Will post orders and order products on click of the add to order button
     const addOrder = () => {
         // Checks that user is valid
@@ -136,8 +159,12 @@ const ProductDetail = props => {
             {
                 <section className="product-details">
                     <h3>{props.product.name}</h3>
-                    <button onClick={() => {console.log(`recommend friend${props.product.name}`)}}>Recommend To A Friend</button>
+                    <div className = "col">
+                    <div className = "row">
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
+                    <button onClick= {addToFavorites}>Add To Favorites</button>
+                    </div>
+                    </div>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
                     {checkForRtg(props.product)}

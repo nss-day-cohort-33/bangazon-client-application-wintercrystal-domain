@@ -17,6 +17,7 @@ import OrderHistory from "./profile/OrderHistory"
 import OrderDetail from "./profile/OrderDetail"
 import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
+import Favorites from "./favorites/favorites"
 import CompleteOrder from "./cart/CompleteOrder"
 import IncompleteOrders from "./reports/IncompleteOrders"
 import Reports from "./reports/Reports"
@@ -31,6 +32,7 @@ const ApplicationViews = () => {
     const [completeOrders, setCompleteOrders] = useState([])
     const { isAuthenticated } = useSimpleAuth()
     const [myRatings, setMyRatings] = useState([])
+
 
     // Fetch from database then set state with products
     const getProducts = () => {
@@ -251,6 +253,14 @@ const ApplicationViews = () => {
                 exact path="/profile/update" render={props => {
                     if(isAuthenticated()) return (
                         <MyProfileEditForm {...props} />
+                    )
+                    else return <Redirect to="/login"/>
+                }}
+            />
+            <Route
+                exact path="/favorites" render={props => {
+                    if(isAuthenticated()) return (
+                        <Favorites {...props} getProducts={getProducts}/>
                     )
                     else return <Redirect to="/login"/>
                 }}
