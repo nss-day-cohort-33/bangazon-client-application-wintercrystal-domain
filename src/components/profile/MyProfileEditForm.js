@@ -10,7 +10,6 @@ const ProfileEditForm = props => {
   const phone_number = useRef()
   const address = useRef()
   const { isAuthenticated } = useSimpleAuth()
-  const [currentProfile, setCurrentProfile] = useState({})
 
 // PUT request updates last name, phone number, and address
 

@@ -17,6 +17,7 @@ import OrderHistory from "./profile/OrderHistory"
 import OrderDetail from "./profile/OrderDetail"
 import MyProducts from "./products/MyProducts"
 import MyProfileEditForm from "./profile/MyProfileEditForm"
+import Favorites from "./favorites/favorites"
 import CompleteOrder from "./cart/CompleteOrder"
 import IncompleteOrders from "./reports/IncompleteOrders"
 import Reports from "./reports/Reports"
@@ -32,6 +33,7 @@ const ApplicationViews = () => {
     const { isAuthenticated } = useSimpleAuth()
     const [myRatings, setMyRatings] = useState([])
     const [recommendations, setRecommendations] = useState([])
+
 
     // Fetch from database then set state with products
     const getProducts = () => {
@@ -268,11 +270,19 @@ const ApplicationViews = () => {
                     else return <Redirect to="/login"/>
                 }}
             />
+            <Route
+                exact path="/favorites" render={props => {
+                    if(isAuthenticated()) return (
+                        <Favorites {...props} getProducts={getProducts}/>
+                    )
+                    else return <Redirect to="/login"/>
+                }}
+            />
 
             <Route
                 exact path="/orderhistory" render={props => {
                     return (
-                        <OrderHistory {...props} completeOrders={completeOrders}/>
+                        <OrderHistory getProducts = {getProducts} {...props} completeOrders={completeOrders}/>
                     )
                 }}
             />
@@ -299,7 +309,7 @@ const ApplicationViews = () => {
             <Route exact path="/orderhistory/:orderId(\d+)" render={(props) => {
               let order = completeOrders.find(order => order.id === +props.match.params.orderId)
               if (order) {
-                return <OrderDetail getMyRatings={getMyRatings} {...props} order={order} />
+                return <OrderDetail getProducts={getProducts} getMyRatings={getMyRatings} {...props} order={order} />
               }
               }}
             />

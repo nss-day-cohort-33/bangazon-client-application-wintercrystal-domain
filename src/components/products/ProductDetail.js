@@ -69,8 +69,31 @@ const ProductDetail = props => {
 
 
     // On mount get some orders
-    useEffect( getOrderProducts, [])
+    useEffect(getOrderProducts, [])
 
+
+    const addToFavorites = () => {
+        // console.log(props.product.customer.url.substring(32,33))
+        fetch('http://localhost:8000/favorites', {
+            "method": "POST",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("bangazon_token")}`
+            },
+            "body": JSON.stringify({
+                // "seller_id": props.product.customer.url.substring(32,33)
+                "seller_id": props.product.customer.user.id,
+                "products":props.product
+            })
+        })
+            .then(response => response.json())
+            .then(() => {
+                console.log("Added")
+                props.getProducts()
+                props.history.push("/favorites")
+            })
+    }
 
     // Will post orders and order products on click of the add to order button
     const addOrder = () => {
@@ -93,6 +116,13 @@ const ProductDetail = props => {
         }
     }
 
+    const checkForRtg = (product) => {
+        if (product.avg_rating !== null) {
+            return <p><font size = "2">Average rating by users who bought this product: <b>
+            {(+product.avg_rating).toFixed(2)}</b></font></p>
+        }
+        else {}
+    }
     //Conditionally renders update product button if product belongs to user and has inventory of 0
     const renderUpdateBtn = () => {
         if ((+props.product.customer.id === +localStorage.getItem("id")) && (productQuantity === 0)) {
@@ -143,7 +173,7 @@ const createRecommendation = (id) => {
         window.alert("Please add a quantity that is greater than 0")
     }
     }
-    console.log(props.product.customer)
+    console.log(props.product)
     return (
         <>
             <dialog id="dialog--time" className="dialog--time" onKeyUp={(event) => {handler(event)}}>
@@ -183,9 +213,17 @@ const createRecommendation = (id) => {
                       )})
                       : ""
                     }
+                    <div className = "col">
+                    <div className = "row">
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
+                    <button onClick= {addToFavorites}>Add To Favorites</button>
+                    </div>
+                    </div>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
+                    {checkForRtg(props.product)}
+
+
                     <div id="product-quantity">
                     <h4>Quantity: {productQuantity}<font size="1"> available</font></h4>
                     {renderUpdateBtn()}
