@@ -55,7 +55,7 @@ const ProductDetail = props => {
 
 
     // On mount get some orders
-    useEffect( getOrderProducts, [])
+    useEffect(getOrderProducts, [])
 
 
     // Will post orders and order products on click of the add to order button
@@ -79,6 +79,13 @@ const ProductDetail = props => {
         }
     }
 
+    const checkForRtg = (product) => {
+        if (product.avg_rating !== null) {
+            return <p><font size = "2">Average rating by users who bought this product: <b>
+            {(+product.avg_rating).toFixed(2)}</b></font></p>
+        }
+        else {}
+    }
     //Conditionally renders update product button if product belongs to user and has inventory of 0
     const renderUpdateBtn = () => {
         if ((+props.product.customer.id === +localStorage.getItem("id")) && (productQuantity === 0)) {
@@ -115,7 +122,7 @@ const ProductDetail = props => {
         window.alert("Please add a quantity that is greater than 0")
     }
     }
-    console.log(props.product.customer)
+    console.log(props.product)
     return (
         <>
             <dialog id="dialog--time" className="dialog--time" onKeyUp={(event) => {handler(event)}}>
@@ -133,6 +140,9 @@ const ProductDetail = props => {
                     <h4><font size="1">Posted By: {props.product.customer.user.first_name} {props.product.customer.user.last_name}</font></h4>
                     <h5>${props.product.price.toFixed(2)} <font size="1">(per one)</font></h5>
                     <p>{props.product.description}</p>
+                    {checkForRtg(props.product)}
+
+
                     <div id="product-quantity">
                     <h4>Quantity: {productQuantity}<font size="1"> available</font></h4>
                     {renderUpdateBtn()}
