@@ -11,17 +11,22 @@ const Favorites = props => {
 
   const { isAuthenticated } = useSimpleAuth();
 
-  const getFavoriteProducts = () => {
-    fetch(`http://localhost:8000/products?product_customer=${props.customer}`, {
-        "method": "GET",
-        "headers": {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        }
-    })
-        .then(response => response.json())
-        .then(setFavoriteProduct)
-}
+  // const getFavoriteProducts = () => {
+  //   if (isAuthenticated()) {
+  //   fetch(`http://localhost:8000/favorites`, {
+  //       "method": "GET",
+  //       "headers": {
+  //         "Accept": "application/json",
+  //         "Content-Type": "application/json",
+  //       }
+  //   })
+  //       .then(response => response.json())
+  //       .then(favoriteProduct => {
+  //         console.log(favoriteProduct)
+  //         setFavoriteProduct(favoriteProduct)
+  //       })
+  //   }
+  // }
 
   const getFavorites = () => {
     console.log(favoriteProduct)
@@ -42,7 +47,6 @@ const Favorites = props => {
     }
 
   useEffect(() => {
-    getFavoriteProducts()
     // console.log(product)
     getFavorites()
     // getMyProducts()
@@ -53,18 +57,19 @@ return (
   <>
 
           <div className="Favorites">
+          <div className="card-body">
           <h1>Favorites</h1>
           {
 
               favorites.map((favorite) => {
                 console.log(favorite)
-                  return ("seller" in favorite && favorite.seller !== null) ? <div>
-                      <p className="first_name" ><b>{favorite.seller.user.first_name}</b></p>
-                      <p>My Products{favoriteProduct ? `(${favoriteProduct.length})` : ""}</p>
-
+                  return ("seller" in favorite && favorite.seller !== null) ? <div className="card">
+                    <div className = "col">
+                      <p className="first_name" ><h2>Seller: {favorite.seller.user.first_name}</h2></p>
+                      </div>
                       {
-                        favoriteProduct.map((product) => {
-                          return product.name
+                        favorite.seller.products.map((product) => {
+                          return <li>{product.name}</li>
                         })
                       }
                   </div>
@@ -73,6 +78,7 @@ return (
                   ""
               })
           }
+          </div>
           </div>
   </>
 )
