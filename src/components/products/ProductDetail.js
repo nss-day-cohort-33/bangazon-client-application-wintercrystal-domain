@@ -16,17 +16,16 @@ const ProductDetail = props => {
     const { isAuthenticated } = useSimpleAuth()
     const [count_cart, setCount_Cart] = useState(0)
     const [showInput, setShowInput] = useState(false)
-    let dialog = document.querySelector("#dialog--time")
-    const [isOpen, setIsOpen] = useState(false)
-    const quantity = useRef()
+    let dialog = null
+    const [modalIsOpen, setIsOpen] = useState(false)    const quantity = useRef()
     const userName = useRef()
 
     //toggles modal for adding inventory to product using local state variables
     const toggleDialog = () => {
-        setIsOpen(!isOpen)
-        if (isOpen) {
+        setIsOpen(!modalIsOpen)
+
+        if (modalIsOpen) {
             dialog.removeAttribute("open")
-            window.removeEventListener("keyup", handler)
         } else {
             dialog.setAttribute("open", true)
         }
